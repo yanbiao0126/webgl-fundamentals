@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<!-- this file is auto-generated from webgl/lessons/ko/webgl-multiple-views.md. Do not edited directly -->
+<!--
+Copyright 2021 GFXFundamentals.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+*   Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+
+*   Redistributions in binary form must reproduce the above
+    copyright notice, this list of conditions and the following disclaimer
+    in the documentation and/or other materials provided with the
+    distribution.
+
+*   Neither the name of GFXFundamentals. nor the names of his
+    contributors may be used to endorse or promote products derived from
+    this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="다중 뷰 그리기">
+<meta name="keywords" content="webgl graphics">
+<meta name="thumbnail" content="https://webglfundamentals.org/webgl/lessons/screenshots/webgl-multiple-views_ko.jpg">
+
+<meta property="og:title" content="WebGL 다중 뷰, 다중 캔버스">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://webglfundamentals.org/webgl/lessons/screenshots/webgl-multiple-views_ko.jpg">
+<meta property="og:description" content="다중 뷰 그리기">
+<meta property="og:url" content="https://webglfundamentals.org/webgl/lessons/ko/webgl-multiple-views.html">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@greggman">
+<meta name="twitter:creator" content="@greggman">
+<meta name="twitter:domain" content="webglfundamentals.org">
+<meta name="twitter:title" content="WebGL 다중 뷰, 다중 캔버스">
+<meta name="twitter:url" content="https://webglfundamentals.org/webgl/lessons/ko/webgl-multiple-views.html">
+<meta name="twitter:description" content="다중 뷰 그리기">
+<meta name="twitter:image:src" content="https://webglfundamentals.org/webgl/lessons/screenshots/webgl-multiple-views_ko.jpg">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"WebSite",
+      "@id":"https://webglfundamentals.org/#website",
+      "url":"https://webglfundamentals.org/",
+      "name":"WebglFundamentals"
+    },
+    {
+      "@type":"ImageObject",
+      "@id":"https://webglfundamentals.org/webgl/lessons/ko/webgl-multiple-views.html#primaryimage",
+      "url":"https://webglfundamentals.org/webgl/lessons/screenshots/webgl-multiple-views_ko.jpg",
+      "width":1200,
+      "height":630
+    },
+    {
+      "@type":"WebPage",
+      "@id":"https://webglfundamentals.org/webgl/lessons/ko/webgl-multiple-views.html#webpage",
+      "url":"https://webglfundamentals.org/webgl/lessons/ko/webgl-multiple-views.html",
+      "inLanguage":"ko",
+      "name":"WebGL 다중 뷰, 다중 캔버스",
+      "keywords":"webgl graphics programming",
+      "isPartOf":{
+        "@id":"https://webglfundamentals.org/#website"
+      },
+      "primaryImageOfPage":{
+        "@id":"https://webglfundamentals.org/webgl/lessons/ko/webgl-multiple-views.html#primaryimage"
+      }
+    }
+  ]
+}
+</script>
+
+
+<title>WebGL 다중 뷰, 다중 캔버스</title>
+<link href="/webgl/lessons/resources/webglfundamentals-icon.png" rel="shortcut icon" type="image/png">
+<link rel="stylesheet" href="/webgl/lessons/lang.css">
+<link rel="stylesheet" href="/webgl/lessons/ko/lang.css">
+<link rel="stylesheet" href="/webgl/lessons/resources/lesson.css">
+
+  <link rel="alternate" hreflang="en" href="https://webglfundamentals.org/webgl/lessons/webgl-multiple-views.html">
+  <link rel="alternate" hreflang="fr" href="https://webglfundamentals.org/webgl/lessons/fr/webgl-multiple-views.html">
+  <link rel="alternate" hreflang="ja" href="https://webglfundamentals.org/webgl/lessons/ja/webgl-multiple-views.html">
+  <link rel="alternate" hreflang="ko" href="https://webglfundamentals.org/webgl/lessons/ko/webgl-multiple-views.html">
+  <link rel="alternate" hreflang="pl" href="https://webglfundamentals.org/webgl/lessons/pl/webgl-multiple-views.html">
+  <link rel="alternate" hreflang="pt-br" href="https://webglfundamentals.org/webgl/lessons/pt-br/webgl-multiple-views.html">
+  <link rel="alternate" hreflang="ru" href="https://webglfundamentals.org/webgl/lessons/ru/webgl-multiple-views.html">
+  <link rel="alternate" hreflang="zh_cn" href="https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-multiple-views.html">
+
+
+
+
+</head>
+<body>
+<div class="webgl_navbar">
+  <div>
+    <select class="language">
+    <option value="/webgl/lessons/webgl-multiple-views.html" >English</a>
+    <option value="/webgl/lessons/fr/webgl-multiple-views.html" >Français</a>
+    <option value="/webgl/lessons/ja/webgl-multiple-views.html" >日本語</a>
+    <option value="/webgl/lessons/ko/webgl-multiple-views.html" selected>한국어</a>
+    <option value="/webgl/lessons/pl/webgl-multiple-views.html" >Polski</a>
+    <option value="/webgl/lessons/pt-br/webgl-multiple-views.html" >Portuguese</a>
+    <option value="/webgl/lessons/ru/webgl-multiple-views.html" >Русский</a>
+    <option value="/webgl/lessons/zh_cn/webgl-multiple-views.html" >简体中文</a>
+</select>
+
+
+    <a href="#toc">목차</a>
+  </div>
+</div>
+<div class="webgl_header">
+  <h1><a href="/webgl/lessons/ko/">WebGLFundamentals.org</a></h1>
+<style>
+#forkongithub>div {
+    background: #000;
+    color: #fff;
+    font-family: arial,sans-serif;
+    text-align: center;
+    font-weight: bold;
+    padding: 5px 40px;
+    font-size: 0.9rem;
+    line-height: 1.3rem;
+    position: relative;
+    transition: 0.5s;
+    display: block;
+    width: 400px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateX(200px) rotate(45deg) translate(10px,70px);
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.8);
+    pointer-events: auto;
+}
+#forkongithub a {
+  text-decoration: none;
+  color: #fff;
+}
+#forkongithub>div:hover {
+    background: #c11;
+    color: #fff;
+}
+#forkongithub .contributors {
+  font-size: 0.75rem;
+  background: rgba(255,255,255,0.2);
+  line-height: 1.2;
+  padding: 0.1em;
+}
+#forkongithub>div::before,#forkongithub>div::after {
+    content: "";
+    width: 100%;
+    display: block;
+    position: absolute;
+    top: 1px;
+    left: 0;
+    height: 1px;
+    background: #fff;
+}
+#forkongithub>div::after {
+    bottom: 1px;
+    top: auto;
+}
+
+#forkongithub{
+    z-index: 9999;
+    /* needed for firefox */
+    overflow: hidden;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    pointer-events: none;
+}
+#forkongithub svg{
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+}
+#forkongithub img {
+  width: 1em;
+  height: 1em;
+  border-radius: 100%;
+  vertical-align: middle;
+}
+
+@media (max-width: 900px) {
+    #forkongithub>div {
+        line-height: 1.2rem;
+    }
+}
+@media (max-width: 700px) {
+  #forkongithub {
+    display: none;
+  }
+}
+@media (max-width: 410px) {
+    #forkongithub>div {
+        font-size: 0.7rem;
+        transform: translateX(150px) rotate(45deg) translate(20px,40px);
+    }
+}
+
+</style>
+<div id="forkongithub"><div><div><a href="https://github.com/gfxfundamentals/webgl-fundamentals">Fix, Fork, Contribute <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 136 133" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(3.92891,0,0,3.92891,67.867,129.125)">
+        <path d="M0,-31.904C-8.995,-31.904 -16.288,-24.611 -16.288,-15.614C-16.288,-8.417 -11.621,-2.312 -5.148,-0.157C-4.333,-0.008 -4.036,-0.511 -4.036,-0.943C-4.036,-1.329 -4.05,-2.354 -4.058,-3.713C-8.589,-2.729 -9.545,-5.897 -9.545,-5.897C-10.286,-7.779 -11.354,-8.28 -11.354,-8.28C-12.833,-9.29 -11.242,-9.27 -11.242,-9.27C-9.607,-9.155 -8.747,-7.591 -8.747,-7.591C-7.294,-5.102 -4.934,-5.821 -4.006,-6.238C-3.858,-7.29 -3.438,-8.008 -2.972,-8.415C-6.589,-8.826 -10.392,-10.224 -10.392,-16.466C-10.392,-18.244 -9.757,-19.698 -8.715,-20.837C-8.883,-21.249 -9.442,-22.905 -8.556,-25.148C-8.556,-25.148 -7.188,-25.586 -4.076,-23.478C-2.777,-23.84 -1.383,-24.02 0.002,-24.026C1.385,-24.02 2.779,-23.84 4.08,-23.478C7.19,-25.586 8.555,-25.148 8.555,-25.148C9.444,-22.905 8.885,-21.249 8.717,-20.837C9.761,-19.698 10.392,-18.244 10.392,-16.466C10.392,-10.208 6.583,-8.831 2.954,-8.428C3.539,-7.925 4.06,-6.931 4.06,-5.411C4.06,-3.234 4.04,-1.477 4.04,-0.943C4.04,-0.507 4.333,0 5.16,-0.159C11.628,-2.318 16.291,-8.419 16.291,-15.614C16.291,-24.611 8.997,-31.904 0,-31.904" style="fill:white;"/>
+    </g>
+</svg>
+</a></div></div></div>
+
+</div>
+
+
+<div class="container">
+  <div class="lesson-title">
+    <h1>WebGL 다중 뷰, 다중 캔버스</h1>
+  </div>
+  <div class="lesson">
+    <div class="lesson-main">
+      <p>이 글은 예제를 정리하기 위해 <a href="webgl-less-code-more-fun.html">유틸리티 함수에 대한 글</a>에서 언급한 라이브러리를 사용합니다.
+<code class="notranslate" translate="no">webglUtils.setBuffersAndAttributes</code>라는 함수가 버퍼와 속성을 설정하는 게 어떤 의미인지, <code class="notranslate" translate="no">webglUtils.setUniforms</code>라는 함수가 유니폼을 설정하는 게 어떤 의미인지 모르겠다면, 뒤로 돌아가 <a href="webgl-fundamentals.html">기초</a>를 먼저 읽어주세요.</p>
+<p>같은 장면을 여러 뷰로 그리고 싶다고 가정했을 때, 어떻게 할 수 있을까요?
+한 가지 방법은 <a href="webgl-render-to-texture.html">텍스처로 렌더링</a>한 다음 텍스처를 캔버스에 그리는 겁니다.
+이는 확실히 유효한 방법이고 그렇게 하는 게 맞을 때도 있습니다.
+하지만 텍스처를 할당하고, 텍스처에 물체를 렌더링한 다음, 텍스처를 캔버스에 렌더링해야 합니다.
+이는 사실상 두 번 렌더링한다는 의미인데요.
+예를 들어 레이싱 게임에서 백미러의 뷰를 렌더링하고 싶을 때 차 뒤에 있는 것을 텍스처에 렌더링한 다음 해당 텍스처를 사용하여 백미러에 그리는 게 적절할 수 있습니다.</p>
+<p>또 다른 방법은 뷰포트를 설정하고 시저 테스트를 켜는 겁니다.
+이건 뷰가 겹치지 않는 상황에서 좋습니다.
+게다가 위 해결책처럼 이중 렌더링이 없습니다.</p>
+<p><a href="webgl-fundamentals.html">첫 글</a>에서 다음과 같이 호출하여 WebGL이 클립 공간에서 픽셀 공간으로 변환하는 방법을 설정한다고 언급했었습니다.</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">gl.viewport(left, bottom, width, height);
+</code></pre>
+<p>가장 일반적인 방법은 캔버스 전체를 덮도록 각각 <code class="notranslate" translate="no">0</code>, <code class="notranslate" translate="no">0</code>, <code class="notranslate" translate="no">gl.canvas.width</code>, <code class="notranslate" translate="no">gl.canvas.height</code>로 설정하는 겁니다.</p>
+<p>캔버스의 일부분으로 설정하여 해당 부분만 그리도록 만들 수도 있습니다.
+WebGL은 클립 공간에서 정점을 클리핑하는데요.
+이전에 언급했던 것처럼 정점 셰이더에서 <code class="notranslate" translate="no">gl_Position</code>의 x, y, z를 -1에서 +1사이의 값으로 설정합니다.
+WebGL은 우리가 전달한 삼각형과 선을 해당 범위로 클리핑합니다.
+클리핑이 발생한 후에 <code class="notranslate" translate="no">gl.viewport</code> 설정이 적용되므로 다음과 같이 사용할 경우,</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">gl.viewport(
+   10,   // 왼쪽
+   20,   // 아래쪽
+   30,   // 너비
+   40,   // 높이
+);
+</code></pre>
+<p>클립 공간 값 x = -1은 픽셀 x = 10에 해당하고 클립 공간 값 x = +1은 픽셀 x = 40(왼쪽인 10에서 너비인 30을 더함)에 해당합니다. (사실 이건 좀 지나친 단순화인데, <a href="#pixel-coords">아래 내용</a>을 봐주세요)</p>
+<p>따라서 클리핑 후에 삼각형을 그리면 뷰포트 안쪽에 딱 맞도록 나타날 겁니다.</p>
+<p><a href="webgl-3d-perspective.html">이전 글</a>의 &#39;F&#39;를 그려봅시다.</p>
+<p>정점 셰이더와 프래그먼트 셰이더는 <a href="webgl-3d-orthographic.html">직교 투영</a>과 <a href="webgl-3d-perspective.html">원근 투영</a>에 대한 글에서 사용한 것과 동일합니다.</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-glsl">// 정점 셰이더
+attribute vec4 a_position;
+attribute vec4 a_color;
+
+uniform mat4 u_matrix;
+
+varying vec4 v_color;
+
+void main() {
+  // 위치에 행렬 곱하기
+  gl_Position = u_matrix * a_position;
+
+  // 프래그먼트 셰이더로 정점 색상 전달
+  v_color = a_color;
+}
+</code></pre>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-glsl">// 프래그먼트 셰이더
+precision mediump float;
+
+// 정점 셰이더에서 전달됩니다.
+varying vec4 v_color;
+
+void main() {
+  gl_FragColor = v_color;
+}
+</code></pre>
+<p>초기화할 때 &#39;F&#39;에 대한 프로그램과 버퍼를 생성해야 합니다.</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">// GLSL 프로그램 설정
+// 셰이더 컴파일, 프로그램 연결, 위치 조회
+const programInfo = webglUtils.createProgramInfo(gl, [&quot;vertex-shader-3d&quot;, &quot;fragment-shader-3d&quot;]);
+
+// 버퍼를 생성하고 3D &#39;F&#39;에 대한 데이터로 채우기
+const bufferInfo = primitives.create3DFBufferInfo(gl);
+</code></pre>
+<p>그리기 위해 투영 행렬, 카메라 행렬, 월드 행렬을 전달할 수 있는 함수를 만들어 보겠습니다.</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">function drawScene(projectionMatrix, cameraMatrix, worldMatrix) {
+  // 카메라 행렬로 뷰 행렬을 만듭니다.
+  const viewMatrix = m4.inverse(cameraMatrix);
+
+  // 그것들을 전부 곱해서 worldViewProjection 행렬을 만듭니다.
+  let mat = m4.multiply(projectionMatrix, viewMatrix);
+  mat = m4.multiply(mat, worldMatrix);
+
+  gl.useProgram(programInfo.program);
+
+  // ------ F 그리기 --------
+
+  // 필요한 모든 속성 설정
+  webglUtils.setBuffersAndAttributes(gl, programInfo, bufferInfo);
+
+  // 유니폼 설정
+  webglUtils.setUniforms(programInfo, {
+    u_matrix: mat,
+  });
+
+  // gl.drawArrays 혹은 gl.drawElements 호출
+  webglUtils.drawBufferInfo(gl, bufferInfo);
+}
+</code></pre>
+<p>그런 다음 F를 그리는 함수를 호출합니다.</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">function degToRad(d) {
+  return d * Math.PI / 180;
+}
+
+const settings = {
+  rotation: 150,  // 도 단위
+};
+const fieldOfViewRadians = degToRad(120);
+
+function render() {
+  webglUtils.resizeCanvasToDisplaySize(gl.canvas);
+
+  gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+
+  gl.enable(gl.CULL_FACE);
+  gl.enable(gl.DEPTH_TEST);
+
+  const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+  const near = 1;
+  const far = 2000;
+
+  // 원근 투영 행렬 계산
+  const perspectiveProjectionMatrix =
+      m4.perspective(fieldOfViewRadians, aspect, near, far);
+
+  // lookAt을 사용하여 카메라 행렬 계산
+  const cameraPosition = [0, 0, -75];
+  const target = [0, 0, 0];
+  const up = [0, 1, 0];
+  const cameraMatrix = m4.lookAt(cameraPosition, target, up);
+
+  // 월드 공간에서 F 회전
+  let worldMatrix = m4.yRotation(degToRad(settings.rotation));
+  worldMatrix = m4.xRotate(worldMatrix, degToRad(settings.rotation));
+  // &#39;F&#39;를 원점 중심으로 이동
+  worldMatrix = m4.translate(worldMatrix, -35, -75, -5);
+
+  drawScene(perspectiveProjectionMatrix, cameraMatrix, worldMatrix);
+}
+render();
+</code></pre>
+<p>코드를 단순하게 유지하기 위한 <a href="webgl-less-code-more-fun.html">라이브러리</a>를 사용했다는 걸 제외하면 <a href="webgl-3d-perspective.html">원근에 대한 글</a>의 마지막 예제와 동일합니다.</p>
+<p><div class="webgl_example_container">
+  <iframe class="webgl_example" style=" " src="/webgl/resources/editor.html?url=/webgl/lessons/..%2Fwebgl-multiple-views-one-view.html"></iframe>
+  <a class="webgl_center" href="/webgl/lessons/../webgl-multiple-views-one-view.html" target="_blank">새 창을 열려면 여기를 클릭</a>
+</div>
+
+</p>
+<p><code class="notranslate" translate="no">gl.viewport</code>를 사용하여 &#39;F&#39; 뷰 2개를 나란히 그려봅시다.</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">function render() {
+  webglUtils.resizeCanvasToDisplaySize(gl.canvas);
+
+-  gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+
+  gl.enable(gl.CULL_FACE);
+  gl.enable(gl.DEPTH_TEST);
+
+  // 뷰를 2개로 나눌 겁니다.
+-  const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
++  const effectiveWidth = gl.canvas.clientWidth / 2;
++  const aspect = effectiveWidth / gl.canvas.clientHeight;
+  const near = 1;
+  const far = 2000;
+
+  // 원근 투영 행렬 계산
+  const perspectiveProjectionMatrix =
+      m4.perspective(fieldOfViewRadians, aspect, near, far);
+
++  // 직교 투영 행렬 계산
++  const halfHeightUnits = 120;
++  const orthographicProjectionMatrix = m4.orthographic(
++      -halfHeightUnits * aspect,  // 왼쪽
++       halfHeightUnits * aspect,  // 오른쪽
++      -halfHeightUnits,           // 아래쪽
++       halfHeightUnits,           // 위쪽
++       -75,                       // 근거리
++       2000);                     // 원거리
+
+  // lookAt을 사용하여 카메라 행렬 계산
+  const cameraPosition = [0, 0, -75];
+  const target = [0, 0, 0];
+  const up = [0, 1, 0];
+  const cameraMatrix = m4.lookAt(cameraPosition, target, up);
+
+  let worldMatrix = m4.yRotation(degToRad(settings.rotation));
+  worldMatrix = m4.xRotate(worldMatrix, degToRad(settings.rotation));
+  // &#39;F&#39;를 원점 중심으로 이동
+  worldMatrix = m4.translate(worldMatrix, -35, -75, -5);
+
++  const {width, height} = gl.canvas;
++  const leftWidth = width / 2 | 0;
++
++  // 직교 카메라로 왼쪽에 그리기
++  gl.viewport(0, 0, leftWidth, height);
++
++  drawScene(orthographicProjectionMatrix, cameraMatrix, worldMatrix);
+
++  // 원근 카메라로 오른쪽에 그리기
++  const rightWidth = width - leftWidth;
++  gl.viewport(leftWidth, 0, rightWidth, height);
+
+  drawScene(perspectiveProjectionMatrix, cameraMatrix, worldMatrix);
+}
+</code></pre>
+<p>위에서 먼저 캔버스의 왼쪽 절반을 덮기 위해 뷰포트를 설정하고, 그린 다음, 오른쪽 절반을 덮고 그리도록 설정한 것을 볼 수 있습니다.
+그렇지 않으면 변경한 투영 행렬을 제외하고 양쪽 면에 동일한 것을 그립니다.</p>
+<p><div class="webgl_example_container">
+  <iframe class="webgl_example" style=" " src="/webgl/resources/editor.html?url=/webgl/lessons/..%2Fwebgl-multiple-views.html"></iframe>
+  <a class="webgl_center" href="/webgl/lessons/../webgl-multiple-views.html" target="_blank">새 창을 열려면 여기를 클릭</a>
+</div>
+
+</p>
+<p>양쪽 면을 다른 색상으로 지워봅시다.</p>
+<p>먼저 <code class="notranslate" translate="no">drawScene</code>에서 <code class="notranslate" translate="no">gl.clear</code>를 호출합니다.</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">  function drawScene(projectionMatrix, cameraMatrix, worldMatrix) {
++    // 캔버스와 깊이 버퍼 지우기
++    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    ...
+</code></pre>
+<p>그런 다음 <code class="notranslate" translate="no">drawScene</code> 호출 전에 이렇게 합니다.</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">  const {width, height} = gl.canvas;
+  const leftWidth = width / 2 | 0;
+
+  // 직교 카메라로 왼쪽에 그리기
+  gl.viewport(0, 0, leftWidth, height);
++  gl.clearColor(1, 0, 0, 1);  // 빨간색
+
+  drawScene(orthographicProjectionMatrix, cameraMatrix, worldMatrix);
+
+  // 원근 카메라로 오른쪽에 그리기
+  const rightWidth = width - leftWidth;
+  gl.viewport(leftWidth, 0, rightWidth, height);
+  gl.clearColor(0, 0, 1, 1);  // 파란색
+
++  drawScene(perspectiveProjectionMatrix, cameraMatrix, worldMatrix);
+</code></pre>
+<p><div class="webgl_example_container">
+  <iframe class="webgl_example" style=" " src="/webgl/resources/editor.html?url=/webgl/lessons/..%2Fwebgl-multiple-views-clear-issue.html"></iframe>
+  <a class="webgl_center" href="/webgl/lessons/../webgl-multiple-views-clear-issue.html" target="_blank">새 창을 열려면 여기를 클릭</a>
+</div>
+
+</p>
+<p>이런 무슨 일이 일어난 걸까요?
+왜 왼쪽에는 아무것도 없는거죠?</p>
+<p>알고보니 <code class="notranslate" translate="no">gl.clear</code>가 <code class="notranslate" translate="no">viewport</code> 설정을 확인하지 않고 있습니다.
+이걸 고치기 위해 <em>시저 테스트</em>를 사용할 수 있는데요.
+시저 테스트에서는 사각형을 정의할 수 있습니다.
+시저 테스트가 활성화되어 있다면 해당 사각형 바깥에 있는 것들은 영향을 받지 않습니다.</p>
+<p>시저 테스트는 기본적으로 꺼져 있는데요.
+아래의 함수를 호출하여 활성화할 수 있습니다</p>
+<pre class="prettyprint notranslate" translate="no"><code class="notranslate" translate="no">gl.enable(gl.SCISSOR_TEST);
+</code></pre><p>뷰포트처럼 캔버스의 초기 크기를 기본 값으로 하지만 <code class="notranslate" translate="no">gl.scissor</code>를 호출하여 뷰포트와 동일한 매개변수로 설정할 수 있습니다.</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">gl.scissor(
+   10,   // 왼쪽
+   20,   // 아래쪽
+   30,   // 너비
+   40,   // 높이
+);
+</code></pre>
+<p>그럼 여기에 추가해봅시다.</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">function render() {
+  webglUtils.resizeCanvasToDisplaySize(gl.canvas);
+
+  gl.enable(gl.CULL_FACE);
+  gl.enable(gl.DEPTH_TEST);
++  gl.enable(gl.SCISSOR_TEST);
+
+  ...
+
+  const {width, height} = gl.canvas;
+  const leftWidth = width / 2 | 0;
+
+  // 직교 카메라로 왼쪽에 그리기
+  gl.viewport(0, 0, leftWidth, height);
++  gl.scissor(0, 0, leftWidth, height);
+  gl.clearColor(1, 0, 0, 1);  // 빨간색
+
+  drawScene(orthographicProjectionMatrix, cameraMatrix, worldMatrix);
+
+  // 원근 카메라로 오른쪽에 그리기
+  const rightWidth = width - leftWidth;
+  gl.viewport(leftWidth, 0, rightWidth, height);
++  gl.scissor(leftWidth, 0, rightWidth, height);
+  gl.clearColor(0, 0, 1, 1);  // 파란색
+
+  drawScene(perspectiveProjectionMatrix, cameraMatrix, worldMatrix);
+}
+</code></pre>
+<p>이제 작동합니다.</p>
+<p><div class="webgl_example_container">
+  <iframe class="webgl_example" style=" " src="/webgl/resources/editor.html?url=/webgl/lessons/..%2Fwebgl-multiple-views-clear-fixed.html"></iframe>
+  <a class="webgl_center" href="/webgl/lessons/../webgl-multiple-views-clear-fixed.html" target="_blank">새 창을 열려면 여기를 클릭</a>
+</div>
+
+</p>
+<p>물론 같은 장면을 그리는 것에 국한된 것은 아닙니다.
+각 뷰에 여러분이 원하는 것을 그릴 수 있습니다.</p>
+<h2 id="-">여러 캔버스 그리기</h2>
+<p>이건 여러 캔버스를 시뮬레이션하는 데 좋은 솔루션입니다.
+여러분이 게임의 캐릭터 선택 화면을 만들고 유저가 하나를 선택할 수 있도록 각각의 3D 모델을 목록에 표시하고 싶다고 해봅시다.
+혹은 이커머스 사이트를 만들어 각 상품의 3D 모델을 보여주고 싶다고 가정해 보겠습니다.</p>
+<p>가장 확실한 방법은 항목을 보여주고 싶은 곳마다 <code class="notranslate" translate="no">&lt;canvas&gt;</code>를 놓는 겁니다.
+하지만 안타깝게도 많은 문제에 부딪히는데요.</p>
+<p>먼저 각 캔버스는 다른 WebGL 컨텍스트를 필요로 하고, WebGL 컨텍스트는 리소스를 공유할 수 없으므로, 각 캔버스의 셰이더를 컴파일하고, 각 캔버스의 텍스처를 로드한 다음, 각 캔버스의 지오메트리를 업로드해야 합니다.</p>
+<p>또 다른 문제는 대부분의 브라우저가 동시 지원 캔버스 수에 제한이 있다는 겁니다.
+많은 경우에 최대 컨텍스트가 8개 정도로 적은데요.
+즉 9번째 캔버스의 WebGL 컨텍스트를 생성함과 동시에 첫 번째 캔버스는 컨텍스트를 잃게 됩니다.</p>
+<p>창 전체를 덮는 커다란 캔버스를 만들어 이러한 문제를 해결할 수 있습니다.
+그런 다음 항목을 그리고 싶은 곳마다 플레이스홀더 <code class="notranslate" translate="no">&lt;div&gt;</code>를 넣습니다.
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect"><code class="notranslate" translate="no">element.getBoundingClientRect</code></a>를 사용하여 해당 영역에서 그릴 뷰포트와 시저를 설정한 위치를 찾을 수 있습니다.</p>
+<p>이렇게 하면 위에서 언급한 문제가 모두 해결됩니다.
+하나의 WebGL 컨텍스트만 있으므로 리소스를 공유할 수 있고 컨텍스트 제한에 막히지 않습니다.</p>
+<p>예제를 만들어 보겠습니다.</p>
+<p>먼저 앞으로 갈 일부 콘텐츠와 함께 배경으로 할 캔버스를 만들어봅시다.
+첫 번째는 HTML입니다.</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-html">&lt;body&gt;
+  &lt;canvas id=&quot;canvas&quot;&gt;&lt;/canvas&gt;
+  &lt;div id=&quot;content&quot;&gt;&lt;/div&gt;
+&lt;/body&gt;
+</code></pre>
+<p>다음은 CSS입니다.</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-css">body {
+  margin: 0;
+}
+#content {
+  margin: 10px;
+}
+#canvas {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  display: block;
+}
+</code></pre>
+<p>이제 몇 가지 그릴 것들을 만들어 보겠습니다.
+<a href="webgl-less-code-more-fun.html"><code class="notranslate" translate="no">BufferInfo</code></a>는 이름별 버퍼 목록일 뿐이고 설정에는 해당 속성을 설정해야 합니다.</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">// 버퍼를 생성하고 다양한 데이터를 채웁니다.
+const bufferInfos = [
+  primitives.createCubeBufferInfo(
+      gl,
+      1,  // 너비
+      1,  // 높이
+      1,  // 깊이
+  ),
+  primitives.createSphereBufferInfo(
+      gl,
+      0.5,  // 반지름
+      8,    // 둘레 세분화
+      6,    // 수직 세분화
+  ),
+  primitives.createTruncatedConeBufferInfo(
+      gl,
+      0.5,  // 아래쪽 반지름
+      0,    // 위쪽 반지름
+      1,    // 높이
+      6,    // 둘레 세분화
+      1,    // 수직 세분화
+  ),
+];
+</code></pre>
+<p>이제 100개의 HTML 항목을 만들어 보겠습니다.
+각각에 대해 컨테이너 <code class="notranslate" translate="no">div</code>를 만들고 내부에는 뷰와 레이블이 만듭니다.
+뷰는 항목을 그리려는 하는 빈 <code class="notranslate" translate="no">div</code> 요소입니다.</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">function createElem(type, parent, className) {
+  const elem = document.createElement(type);
+  parent.appendChild(elem);
+  if (className) {
+    elem.className = className;
+  }
+  return elem;
+}
+
+function randArrayElement(array) {
+  return array[Math.random() * array.length | 0];
+}
+
+function rand(min, max) {
+  if (max === undefined) {
+    max = min;
+    min = 0;
+  }
+  return Math.random() * (max - min) + min;
+}
+
+const contentElem = document.querySelector(&#39;#content&#39;);
+const items = [];
+const numItems = 100;
+for (let i = 0; i &lt; numItems; ++i) {
+  const outerElem = createElem(&#39;div&#39;, contentElem, &#39;item&#39;);
+  const viewElem = createElem(&#39;div&#39;, outerElem, &#39;view&#39;);
+  const labelElem = createElem(&#39;div&#39;, outerElem, &#39;label&#39;);
+  labelElem.textContent = `Item ${i + 1}`;
+  const bufferInfo = randArrayElement(bufferInfos);
+  const color = [rand(1), rand(1), rand(1), 1];
+  items.push({
+    bufferInfo,
+    color,
+    element: viewElem,
+  });
+}
+</code></pre>
+<p>다음과 같이 항목들의 스타일을 지정해봅시다.</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-css">.item {
+  display: inline-block;
+  margin: 1em;
+  padding: 1em;
+}
+.label {
+  margin-top: 0.5em;
+}
+.view {
+  width: 250px;
+  height: 250px;
+  border: 1px solid black;
+}
+</code></pre>
+<p><code class="notranslate" translate="no">items</code> 배열은 각 항목에 대한 <code class="notranslate" translate="no">bufferInfo</code>, <code class="notranslate" translate="no">color</code>, <code class="notranslate" translate="no">element</code>를 가집니다.
+모든 항목을 한 번에 하나씩 반복하여 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect"><code class="notranslate" translate="no">element.getBoundingClientRect</code></a>를 호출하고 반환된 사각형을 사용하여 해당 요소가 캔버스와 교차하는지 확인합니다.
+그렇다면 뷰포트와 시저가 일치하도록 설정한 다음 해당 객체를 그립니다.</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">function render(time) {
+  time *= 0.001;  // 초 단위로 변환
+
+  webglUtils.resizeCanvasToDisplaySize(gl.canvas);
+
+  gl.enable(gl.CULL_FACE);
+  gl.enable(gl.DEPTH_TEST);
+  gl.enable(gl.SCISSOR_TEST);
+
+  // 캔버스를 현재 스크롤 위치의 상단으로 이동
+  gl.canvas.style.transform = `translateY(${window.scrollY}px)`;
+
+  for (const {bufferInfo, element, color} of items) {
+    const rect = element.getBoundingClientRect();
+    if (rect.bottom &lt; 0 || rect.top  &gt; gl.canvas.clientHeight ||
+        rect.right  &lt; 0 || rect.left &gt; gl.canvas.clientWidth) {
+      continue;  // 화면을 벗어남
+    }
+
+    const width  = rect.right - rect.left;
+    const height = rect.bottom - rect.top;
+    const left   = rect.left;
+    const bottom = gl.canvas.clientHeight - rect.bottom;
+
+    gl.viewport(left, bottom, width, height);
+    gl.scissor(left, bottom, width, height);
+    gl.clearColor(...color);
+
+    const aspect = width / height;
+    const near = 1;
+    const far = 2000;
+
+    // 원근 투영 행렬 계산
+    const perspectiveProjectionMatrix =
+        m4.perspective(fieldOfViewRadians, aspect, near, far);
+
+    // lookAt을 사용하여 카메라 행렬 계산
+    const cameraPosition = [0, 0, -2];
+    const target = [0, 0, 0];
+    const up = [0, 1, 0];
+    const cameraMatrix = m4.lookAt(cameraPosition, target, up);
+
+    // 항목 회전
+    const rTime = time * 0.2;
+    const worldMatrix = m4.xRotate(m4.yRotation(rTime), rTime);
+
+    drawScene(perspectiveProjectionMatrix, cameraMatrix, worldMatrix, bufferInfo);
+  }
+  requestAnimationFrame(render);
+}
+requestAnimationFrame(render);
+</code></pre>
+<p>위 코드에서 <a href="webgl-animation.html">requestAnimationFrame 루프</a>를 사용하여 객체에 애니메이션을 적용할 수 있도록 만들었습니다.
+또한 그리려는 <code class="notranslate" translate="no">bufferInfo</code>를 <code class="notranslate" translate="no">drawScene</code>에 전달했습니다.
+그리고 셰이더를 단순하게 유지하기 위해 법선을 색상으로 사용하고 있습니다.
+<a href="webgl-3d-lighting-spot.html">조명</a>을 추가하면 코드는 훨씬 복잡해집니다.</p>
+<p><div class="webgl_example_container">
+  <iframe class="webgl_example" style=" " src="/webgl/resources/editor.html?url=/webgl/lessons/..%2Fwebgl-multiple-views-items.html"></iframe>
+  <a class="webgl_center" href="/webgl/lessons/../webgl-multiple-views-items.html" target="_blank">새 창을 열려면 여기를 클릭</a>
+</div>
+
+</p>
+<p>물론 각 항목에 대한 전체 3D 장면이나 그 비슷한 무엇이든 그릴 수 있습니다.
+뷰포트와 시저를 정확하게 설정한 다음 영역의 비율이 일치하도록 투영 행렬을 설정하는 한 작동합니다.</p>
+<p>코드에서 한 가지 더 주목할 만한 점은 이 라인으로 캔버스를 움직이고 있다는 겁니다.</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">gl.canvas.style.transform = `translateY(${window.scrollY}px)`;
+</code></pre>
+<p>대신 캔버스를 <code class="notranslate" translate="no">position: fixed;</code>로 설정할 수 있는데, 이 경우에는 페이지에 따라 스크롤되지 않습니다.
+차이는 미묘할 겁니다.
+브라우저는 최대한 부드럽게 페이즈를 스크롤하려고 합니다.
+그건 물체를 그리는 것보다 빠를 수도 있습니다.
+이것 때문에 2가지 옵션이 있습니다.</p>
+<ol>
+<li><p>위치가 고정된 캔버스 사용</p>
+<p>이 경우 충분히 빠르게 업데이트할 수 없다면 캔버스 앞의 HTML이 스크롤되지만 캔버스 자체는 잠시동안 동기화되지 않습니다.</p>
+<p><img src="../resources/multi-view-skew.gif" style="border: 1px solid black; width: 266px;" class="webgl_center"></p>
+</li>
+<li><p>컨텐츠 아래로 캔버스 이동</p>
+<p>이 경우 충분히 빠르게 업데이트할 수 없다면 캔버스는 HTML과 동기화되어 스크롤되지만 물체를 그리려는 새로운 영역은 그릴 기회를 얻을 때까지 비어있게 됩니다.</p>
+<p><img src="../resources/multi-view-fixed.gif" style="border: 1px solid black; width: 266px;" class="webgl_center"></p>
+<p>이게 위에서 사용한 솔루션입니다.</p>
+</li>
+</ol>
+<p>가로 스크롤을 처리하고 싶다면 이 라인을 바꾸면 되는데요.</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">gl.canvas.style.transform = `translateY(${window.scrollY}px)`;
+</code></pre>
+<p>이렇게 변경합니다.</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">gl.canvas.style.transform = `translateX(${window.scrollX}px) translateY(${window.scrollY}px)`;
+</code></pre>
+<p><div class="webgl_example_container">
+  <iframe class="webgl_example" style=" " src="/webgl/resources/editor.html?url=/webgl/lessons/..%2Fwebgl-multiple-views-items-horizontal-scrolling.html"></iframe>
+  <a class="webgl_center" href="/webgl/lessons/../webgl-multiple-views-items-horizontal-scrolling.html" target="_blank">새 창을 열려면 여기를 클릭</a>
+</div>
+
+</p>
+<p>이 글이 다중 뷰 그리는 방법을 이해하는 데 도움이 되었길 바랍니다.
+앞으로 다중 뷰를 보는 것이 이해하는 데 유용한 글에서 이러한 기술을 사용할 겁니다.</p>
+<div class="webgl_bottombar" id="pixel-coords">
+<h3>픽셀 좌표</h3>
+<p>
+WebGL에서 픽셀 좌표는 가장자리로 참조됩니다.
+예를 들어 3x2 픽셀 크기의 캔버스가 있고 이렇게 뷰포트를 설정한다고 가정해봅시다.
+</p>
+<pre class="prettyprint"><code class="notranslate" translate="no">
+gl.viewport(
+  0, // 왼쪽
+  0, // 아래쪽
+  3, // 너비
+  2, // 높이
+);
+</code></pre>
+<p>그런 다음 실제로 3x2 픽셀을 둘러싸는 사각형을 정의합니다.</p>
+<div class="webgl_center"><img src="../resources/webgl-pixels.svg" style="width: 500px;"></div>
+<p>
+클립 공간 값 X = -1.0은 이 사각형의 왼쪽 가장자리에 해당하고 클립 공간 값 X = 1.0은 오른쪽에 해당합니다.
+위에서 -1.0은 가장 왼쪽 픽셀에 해당하지만 실제로는 왼쪽 가장자리에 해당한다고 말했습니다.
+</p>
+</div>
+
+
+    </div>
+    <div class="lesson-sidebar">
+        <select class="language">
+    <option value="/webgl/lessons/webgl-multiple-views.html" >English</a>
+    <option value="/webgl/lessons/fr/webgl-multiple-views.html" >Français</a>
+    <option value="/webgl/lessons/ja/webgl-multiple-views.html" >日本語</a>
+    <option value="/webgl/lessons/ko/webgl-multiple-views.html" selected>한국어</a>
+    <option value="/webgl/lessons/pl/webgl-multiple-views.html" >Polski</a>
+    <option value="/webgl/lessons/pt-br/webgl-multiple-views.html" >Portuguese</a>
+    <option value="/webgl/lessons/ru/webgl-multiple-views.html" >Русский</a>
+    <option value="/webgl/lessons/zh_cn/webgl-multiple-views.html" >简体中文</a>
+</select>
+
+
+        <div id="toc">
+          <ul>  <li>기초</li>
+        <ul>
+          <li><a href="/webgl/lessons/ko/webgl-fundamentals.html">기초</a></li>
+<li><a href="/webgl/lessons/ko/webgl-how-it-works.html">작동 방식</a></li>
+<li><a href="/webgl/lessons/ko/webgl-shaders-and-glsl.html">셰이더와 GLSL</a></li>
+<li><a href="/webgl/lessons/resources/webgl-state-diagram.html">WebGL 상태 다이어그램</a></li>
+        </ul>
+  <li>이미지 처리</li>
+        <ul>
+          <li><a href="/webgl/lessons/ko/webgl-image-processing.html">이미지 처리</a></li>
+<li><a href="/webgl/lessons/ko/webgl-image-processing-continued.html">이미지 처리 심화</a></li>
+        </ul>
+  <li>2D 평행 이동, 회전, 스케일, 행렬 수학</li>
+        <ul>
+          <li><a href="/webgl/lessons/ko/webgl-2d-translation.html">2D 평행 이동</a></li>
+<li><a href="/webgl/lessons/ko/webgl-2d-rotation.html">2D 회전</a></li>
+<li><a href="/webgl/lessons/ko/webgl-2d-scale.html">2D 스케일</a></li>
+<li><a href="/webgl/lessons/ko/webgl-2d-matrices.html">2D 행렬</a></li>
+        </ul>
+  <li>3D</li>
+        <ul>
+          <li><a href="/webgl/lessons/ko/webgl-3d-orthographic.html">3D 직교 투영</a></li>
+<li><a href="/webgl/lessons/ko/webgl-3d-perspective.html">3D 원근 투영</a></li>
+<li><a href="/webgl/lessons/ko/webgl-3d-camera.html">3D 카메라</a></li>
+        </ul>
+  <li>조명</li>
+        <ul>
+          <li><a href="/webgl/lessons/ko/webgl-3d-lighting-directional.html">방향성 조명</a></li>
+<li><a href="/webgl/lessons/ko/webgl-3d-lighting-point.html">점 조명</a></li>
+<li><a href="/webgl/lessons/ko/webgl-3d-lighting-spot.html">스포트라이트</a></li>
+        </ul>
+  <li>구조와 구성</li>
+        <ul>
+          <li><a href="/webgl/lessons/ko/webgl-less-code-more-fun.html">유틸리티 함수</a></li>
+<li><a href="/webgl/lessons/ko/webgl-drawing-multiple-things.html">여러 물체 그리기</a></li>
+<li><a href="/webgl/lessons/ko/webgl-scene-graph.html">장면 그래프</a></li>
+        </ul>
+  <li>지오메트리</li>
+        <ul>
+          <li><a href="/webgl/lessons/ko/webgl-3d-geometry-lathe.html">지오메트리 - 선반 가공</a></li>
+<li><a href="/webgl/lessons/ko/webgl-load-obj.html">.obj 파일 로딩</a></li>
+<li><a href="/webgl/lessons/ko/webgl-load-obj-w-mtl.html">.mtl 파일로 .obj 로딩</a></li>
+        </ul>
+  <li>텍스처</li>
+        <ul>
+          <li><a href="/webgl/lessons/ko/webgl-3d-textures.html">텍스처</a></li>
+<li><a href="/webgl/lessons/ko/webgl-data-textures.html">데이터 텍스처</a></li>
+<li><a href="/webgl/lessons/ko/webgl-2-textures.html">2개 이상의 텍스처 사용</a></li>
+<li><a href="/webgl/lessons/ko/webgl-cors-permission.html">교차 출처 이미지</a></li>
+<li><a href="/webgl/lessons/ko/webgl-3d-perspective-correct-texturemapping.html">원근 교정 텍스처 매핑</a></li>
+<li><a href="/webgl/lessons/ko/webgl-planar-projection-mapping.html">평면 및 원근 투영 매핑</a></li>
+        </ul>
+  <li>텍스처 렌더링</li>
+        <ul>
+          <li><a href="/webgl/lessons/ko/webgl-render-to-texture.html">텍스처 렌더링</a></li>
+        </ul>
+  <li>그림자</li>
+        <ul>
+          <li><a href="/webgl/lessons/ko/webgl-shadows.html">그림자</a></li>
+        </ul>
+  <li>기법</li>
+        <ul>
+            <li>2D</li>
+        <ul>
+          <li><a href="/webgl/lessons/ko/webgl-2d-drawimage.html">2D - DrawImage</a></li>
+<li><a href="/webgl/lessons/ko/webgl-2d-matrix-stack.html">2D - 행렬 스택</a></li>
+<li><a href="/webgl/lessons/ko/webgl-sprites.html">스프라이트</a></li>
+        </ul>
+  <li>3D</li>
+        <ul>
+          <li><a href="/webgl/lessons/ko/webgl-cube-maps.html">큐브맵</a></li>
+<li><a href="/webgl/lessons/ko/webgl-environment-maps.html">환경맵</a></li>
+<li><a href="/webgl/lessons/ko/webgl-skybox.html">스카이박스</a></li>
+<li><a href="/webgl/lessons/ko/webgl-skinning.html">스키닝</a></li>
+<li><a href="/webgl/lessons/ko/webgl-fog.html">안개</a></li>
+<li><a href="/webgl/lessons/ko/webgl-picking.html">피킹 (물체 클릭)</a></li>
+        </ul>
+  <li>텍스트</li>
+        <ul>
+          <li><a href="/webgl/lessons/ko/webgl-text-html.html">텍스트 - HTML</a></li>
+<li><a href="/webgl/lessons/ko/webgl-text-canvas2d.html">텍스트 - Canvas 2D</a></li>
+<li><a href="/webgl/lessons/ko/webgl-text-texture.html">텍스트 - 텍스처 사용</a></li>
+<li><a href="/webgl/lessons/ko/webgl-text-glyphs.html">텍스트 - 글리프 텍스처 사용</a></li>
+        </ul>
+  <li>텍스처</li>
+        <ul>
+          <li><a href="/webgl/lessons/ko/webgl-ramp-textures.html">램프 텍스처 (툰 셰이딩)</a></li>
+        </ul>
+  <li>GPGPU</li>
+        <ul>
+          <li><a href="/webgl/lessons/ko/webgl-gpgpu.html">GPGPU</a></li>
+        </ul>
+        </ul>
+  <li>팁</li>
+        <ul>
+          <li><a href="/webgl/lessons/ko/webgl-smallest-programs.html">최소 프로그램</a></li>
+<li><a href="/webgl/lessons/ko/webgl-drawing-without-data.html">데이터 없이 그리기</a></li>
+<li><a href="/webgl/lessons/ko/webgl-shadertoy.html">Shadertoy</a></li>
+<li><a href="/webgl/lessons/ko/webgl-pulling-vertices.html">정점 풀링</a></li>
+        </ul>
+  <li>최적화</li>
+        <ul>
+          <li><a href="/webgl/lessons/ko/webgl-indexed-vertices.html">색인된 정점 (gl.drawElements)</a></li>
+<li><a href="/webgl/lessons/ko/webgl-instanced-drawing.html">색인된 그리기</a></li>
+        </ul>
+  <li>Misc</li>
+        <ul>
+          <li><a href="/webgl/lessons/ko/webgl-setup-and-installation.html">설정 및 설치</a></li>
+<li><a href="/webgl/lessons/ko/webgl-boilerplate.html">상용구</a></li>
+<li><a href="/webgl/lessons/ko/webgl-resizing-the-canvas.html">캔버스 크기 조정</a></li>
+<li><a href="/webgl/lessons/ko/webgl-animation.html">애니메이션</a></li>
+<li><a href="/webgl/lessons/ko/webgl-points-lines-triangles.html">점, 선, 삼각형</a></li>
+<li><a href="/webgl/lessons/ko/webgl-multiple-views.html">다중 뷰, 다중 캔버스</a></li>
+<li><a href="/webgl/lessons/ko/webgl-visualizing-the-camera.html">카메라 시각화</a></li>
+<li><a href="/webgl/lessons/ko/webgl-and-alpha.html">WebGL 알파</a></li>
+<li><a href="/webgl/lessons/ko/webgl-2d-vs-3d-library.html">2D vs 3D 라이브러리</a></li>
+<li><a href="/webgl/lessons/ko/webgl-anti-patterns.html">안티 패턴</a></li>
+<li><a href="/webgl/lessons/ko/webgl-matrix-vs-math.html">WebGL 행렬 vs 수학 행렬</a></li>
+<li><a href="/webgl/lessons/ko/webgl-precision-issues.html">정밀도 문제</a></li>
+<li><a href="/webgl/lessons/ko/webgl-tips.html#screenshot">스크린샷 찍기</a></li>
+<li><a href="/webgl/lessons/ko/webgl-tips.html#preservedrawingbuffer">캔버스 지우기 방지</a></li>
+<li><a href="/webgl/lessons/ko/webgl-tips.html#tabindex">캔버스 키보드 입력</a></li>
+<li><a href="/webgl/lessons/ko/webgl-tips.html#html-background">WebGL 배경 제작</a></li>
+<li><a href="/webgl/lessons/ko/webgl-cross-platform-issues.html">크로스 플랫폼 문제</a></li>
+<li><a href="/webgl/lessons/ko/webgl-qna.html">질문 및 답변</a></li>
+        </ul>
+  <li>참고</li>
+        <ul>
+          <li><a href="/webgl/lessons/ko/webgl-attributes.html">속성</a></li>
+<li><a href="/webgl/lessons/ko/webgl-texture-units.html">텍스처 유닛</a></li>
+<li><a href="/webgl/lessons/ko/webgl-framebuffers.html">프레임 버퍼</a></li>
+<li><a href="/webgl/lessons/ko/webgl-readpixels.html">readPixels</a></li>
+<li><a href="/webgl/lessons/ko/webgl-references.html">참고 자료</a></li>
+        </ul></ul>
+<ul>
+  <li><a href="/docs/">도우미 API 문서</a></li>
+  <li><a href="https://twgljs.org">TWGL, 가벼운 WebGL 라이브러리</a></li>
+  <li><a href="https://github.com/gfxfundamentals/webgl-fundamentals">Github</a></li>
+</ul>
+
+        </div>
+    </div>
+    <div class="lesson-comments">
+        
+    <div>이슈/버그는? <a href="https://github.com/gfxfundamentals/webgl-fundamentals/issues">Github</a>에 이슈를 만들어주세요.</div>
+    <div class="lesson-comment-notes">
+      코드 블록은 <b>&lt;pre&gt;&lt;code&gt;</b>여기에 코드 입력<b>&lt;/code&gt;&lt;/pre&gt;</b>를 사용해주세요
+    </div>
+  
+
+        <div id="disqus_thread"></div>
+        <script>
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'webglfundamentals'; // required: replace example with your forum shortname
+            var disqus_identifier = 'WebGL 다중 뷰, 다중 캔버스';
+            var disqus_title = 'WebGL 다중 뷰, 다중 캔버스';
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                if (window.location.hostname.indexOf("webglfundamentals.org") < 0) {
+                    return;
+                }
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+  </div>
+</div>
+</body>
+<script>
+const settings = {
+  contribTemplate: "Thank you <a href=\"${html_url}\"><img src=\"${avatar_url}\"> ${login}</a><br>for <a href=\"https://github.com/${owner}/${repo}/commits?author=${login}\">${contributions} contributions</a>",
+  owner: "gfxfundamentals",
+  repo: "webgl-fundamentals",
+};
+</script>
+<script src="/contributors.js"></script>
+<script src="/3rdparty/jquery-1.11.2.min.js"></script>
+<script src="/webgl/lessons/resources/prettify.js"></script>
+<script src="/webgl/lessons/resources/lesson.js" type="module"></script>
+<script>
+(function() {
+  if (window.location.hostname.indexOf("webglfundamentals.org") < 0) {
+      return;
+  }
+
+  function addScript(src, type, fn) {
+    const script = document.createElement('script');
+    const firstScript = document.getElementsByTagName('script')[0];
+    script.async = true;
+    script.defer = true;
+    script.type = type || 'javascript';
+    if (fn) {
+      script.addEventListener('load', fn);
+    }
+    script.src = src;
+    firstScript.parentNode.insertBefore(script, firstScript);
+  }
+
+  // can't do this because it would eat contexts
+  //addScript('//gpustats.org/stats.js', 'module');
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-59804936-1', 'auto');
+  ga('send', 'pageview');
+}());
+</script>
+
+
+</html>
+
+
+

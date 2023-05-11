@@ -1,5 +1,5 @@
 /*
- * Copyright 2014, Gregg Tavares.
+ * Copyright 2021 GFXFundamentals.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -12,7 +12,7 @@
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- *     * Neither the name of Gregg Tavares. nor the names of his
+ *     * Neither the name of GFXFundamentals. nor the names of his
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
  *
@@ -836,7 +836,7 @@
     "Note: m4.multiply's multiplication order is reversed.",
     "In other words m4.multiply(a, b) needs to be m4.multiply(b, a)",
     "In math terms the old multiply multiplied the 2nd argument on the left of the first.",
-    "The new one multiplies the 2nd argument on the right of the the first.",
+    "The new one multiplies the 2nd argument on the right of the first.",
   ].join("\n"));
 
   return {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012, Gregg Tavares.
+ * Copyright 2021 GFXFundamentals.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -12,7 +12,7 @@
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- *     * Neither the name of Gregg Tavares. nor the names of his
+ *     * Neither the name of GFXFundamentals. nor the names of his
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
  *
@@ -205,78 +205,6 @@
       }
     }
   };
-
-  /**
-   * Get's the iframe in the parent document
-   * that is displaying the specified window .
-   * @param {Window} window window to check.
-   * @return {HTMLIFrameElement?) the iframe element if window is in an iframe
-   */
-  function getIFrameForWindow(window) {
-    if (!isInIFrame(window)) {
-      return;
-    }
-    const iframes = window.parent.document.getElementsByTagName("iframe");
-    for (let ii = 0; ii < iframes.length; ++ii) {
-      const iframe = iframes[ii];
-      if (iframe.contentDocument === window.document) {
-        return iframe;  // eslint-disable-line
-      }
-    }
-  }
-
-  /**
-   * Returns true if window is on screen. The main window is
-   * always on screen windows in iframes might not be.
-   * @param {Window} window the window to check.
-   * @return {boolean} true if window is on screen.
-   */
-  function isFrameVisible(window) {
-    try {
-      const iframe = getIFrameForWindow(window);
-      if (!iframe) {
-        return true;
-      }
-
-      const bounds = iframe.getBoundingClientRect();
-      const isVisible = bounds.top < window.parent.innerHeight && bounds.bottom >= 0 &&
-                        bounds.left < window.parent.innerWidth && bounds.right >= 0;
-
-      return isVisible && isFrameVisible(window.parent);
-    } catch (e) {
-      return true;  // We got a security error?
-    }
-  }
-
-  /**
-   * Returns true if element is on screen.
-   * @param {HTMLElement} element the element to check.
-   * @return {boolean} true if element is on screen.
-   */
-  function isOnScreen(element) {
-    let isVisible = true;
-
-    if (element) {
-      const bounds = element.getBoundingClientRect();
-      isVisible = bounds.top < topWindow.innerHeight && bounds.bottom >= 0;
-    }
-
-    return isVisible && isFrameVisible(topWindow);
-  }
-
-  // Replace requestAnimationFrame.
-  if (topWindow.requestAnimationFrame) {
-    topWindow.requestAnimationFrame = (function(oldRAF) {
-
-      return function(callback, element) {
-        const handler = function() {
-          return oldRAF(isOnScreen(element) ? callback : handler, element);
-        };
-        return handler();
-      };
-
-    }(topWindow.requestAnimationFrame));
-  }
 
   updateCSSIfInIFrame();
 
@@ -781,7 +709,7 @@
     if (wrapper.getError) {
       wrapper.getError = function() {
         for (const err in glErrorShadow) {
-          if (glErrorShadow.hasOwnProperty(err)) {
+          if (Object.prototype.hasOwnProperty.call(glErrorShadow, err)) {
             if (glErrorShadow[err]) {
               glErrorShadow[err] = false;
               return err;

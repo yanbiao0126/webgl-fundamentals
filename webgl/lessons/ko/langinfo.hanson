@@ -6,7 +6,6 @@
   description: '처음부터 배우는 WebGL',
   link: 'https://webglfundamentals.org/webgl/lessons/ko/',
   commentSectionHeader: `
-    <div>질문은? <a href="https://stackoverflow.com/questions/tagged/webgl">Stackoverflow</a>에서 물어봐주세요.</div>
     <div>이슈/버그는? <a href="https://github.com/gfxfundamentals/webgl-fundamentals/issues">Github</a>에 이슈를 만들어주세요.</div>
     <div class="lesson-comment-notes">
       코드 블록은 <b>&lt;pre&gt;&lt;code&gt;</b>여기에 코드 입력<b>&lt;/code&gt;&lt;/pre&gt;</b>를 사용해주세요
@@ -17,19 +16,16 @@
   categoryMapping: {
     'fundamentals': "기초",
     'image-processing': "이미지 처리",
-    'matrices': "2D 이동, 회전, 크기 조정, 행렬 수학",
-    '3d': "3D",
+    'matrices': "2D 평행 이동, 회전, 스케일, 행렬 수학",
     'lighting': "조명",
-    'organization': "구조 및 조직",
-    'geometry': "기하학",
+    'organization': "구조와 구성",
+    'geometry': "지오메트리",
     'textures': "텍스처",
     'shadows': "그림자",
-    'rendertargets': "텍스처로 렌더링",
+    'rendertargets': "텍스처 렌더링",
     'techniques': "기법",
-    '2d': "2D",
-    'text': "글자",
+    'text': "텍스트",
     'tips': "팁",
-    'misc': "기타",
     'reference': "참고",
     'optimization': "최적화",
   },

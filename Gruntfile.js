@@ -2,6 +2,10 @@
 
 'use strict';
 
+process.on('unhandledRejection', up => {
+  throw up;
+});
+
 const fs = require('fs');
 const path = require('path');
 const liveEditor = require('@gfxfundamentals/live-editor');
@@ -43,6 +47,7 @@ module.exports = function(grunt) {
       examples: {
         src: [
           'webgl/*.html',
+          '!webgl/webgl-qna-*.html',
         ],
       },
       diagram: {
@@ -145,6 +150,8 @@ module.exports = function(grunt) {
     siteName: 'WebGLFundamentals',
     siteThumbnail: 'webglfundamentals.jpg',  // in rootFolder/lessons/resources
     templatePath: 'build/templates',
+    owner: 'gfxfundamentals',
+    repo: 'webgl-fundamentals',
     thumbnailOptions: {
       thumbnailBackground: 'webglfundamentals.jpg',
       text: [

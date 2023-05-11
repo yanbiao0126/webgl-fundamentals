@@ -726,7 +726,7 @@ export function getStateTables(isWebGL2) {
           help: `
           The current **draw** framebuffer (--null-- = the canvas).
           This is framebuffer pixels are written to when calling
-          --gl.clear--, --gl.drawXXX---, --gl.blitFramebuffer--.
+          --gl.clear--, --gl.drawXXX--, --gl.blitFramebuffer--.
 
           Set with
 
@@ -887,7 +887,7 @@ export function getStateTables(isWebGL2) {
         setter: 'scissor',
         formatter: formatUniformValue,
         help: `
-        The dimensions of the scissor test. If the the scissor test is enabled
+        The dimensions of the scissor test. If the scissor test is enabled
         then WebGL will not rendered pixels outside the scissor box.
 
         ---js

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!-- this file is auto-generated from webgl/lessons/webgl-3d-textures.md. Do not edited directly -->
 <!--
-Copyright 2012, Gregg Tavares.
+Copyright 2021 GFXFundamentals.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@ met:
     in the documentation and/or other materials provided with the
     distribution.
 
-*   Neither the name of Gregg Tavares. nor the names of his
+*   Neither the name of GFXFundamentals. nor the names of his
     contributors may be used to endorse or promote products derived from
     this software without specific prior written permission.
 
@@ -131,32 +131,41 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 <div class="webgl_header">
   <h1><a href="/">WebGLFundamentals.org</a></h1>
 <style>
-#forkongithub a {
+#forkongithub>div {
     background: #000;
     color: #fff;
-    text-decoration: none;
     font-family: arial,sans-serif;
     text-align: center;
     font-weight: bold;
     padding: 5px 40px;
     font-size: 0.9rem;
-    line-height: 2rem;
+    line-height: 1.3rem;
     position: relative;
     transition: 0.5s;
     display: block;
-    width: 300px;
+    width: 400px;
     position: absolute;
     top: 0;
     right: 0;
-    transform: translateX(150px) rotate(45deg) translate(10px,70px);
+    transform: translateX(200px) rotate(45deg) translate(10px,70px);
     box-shadow: 4px 4px 10px rgba(0,0,0,0.8);
     pointer-events: auto;
 }
-#forkongithub a:hover {
+#forkongithub a {
+  text-decoration: none;
+  color: #fff;
+}
+#forkongithub>div:hover {
     background: #c11;
     color: #fff;
 }
-#forkongithub a::before,#forkongithub a::after {
+#forkongithub .contributors {
+  font-size: 0.75rem;
+  background: rgba(255,255,255,0.2);
+  line-height: 1.2;
+  padding: 0.1em;
+}
+#forkongithub>div::before,#forkongithub>div::after {
     content: "";
     width: 100%;
     display: block;
@@ -166,7 +175,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     height: 1px;
     background: #fff;
 }
-#forkongithub a::after {
+#forkongithub>div::after {
     bottom: 1px;
     top: auto;
 }
@@ -187,8 +196,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   height: 1em;
   vertical-align: middle;
 }
+#forkongithub img {
+  width: 1em;
+  height: 1em;
+  border-radius: 100%;
+  vertical-align: middle;
+}
+
 @media (max-width: 900px) {
-    #forkongithub a{
+    #forkongithub>div {
         line-height: 1.2rem;
     }
 }
@@ -198,21 +214,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   }
 }
 @media (max-width: 410px) {
-    #forkongithub a{
+    #forkongithub>div {
         font-size: 0.7rem;
         transform: translateX(150px) rotate(45deg) translate(20px,40px);
     }
 }
 
 </style>
-<div id="forkongithub"><a href="https://github.com/gfxfundamentals/webgl-fundamentals">Fix, Fork, Contribute <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div id="forkongithub"><div><div><a href="https://github.com/gfxfundamentals/webgl-fundamentals">Fix, Fork, Contribute <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg width="100%" height="100%" viewBox="0 0 136 133" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
     <g transform="matrix(3.92891,0,0,3.92891,67.867,129.125)">
         <path d="M0,-31.904C-8.995,-31.904 -16.288,-24.611 -16.288,-15.614C-16.288,-8.417 -11.621,-2.312 -5.148,-0.157C-4.333,-0.008 -4.036,-0.511 -4.036,-0.943C-4.036,-1.329 -4.05,-2.354 -4.058,-3.713C-8.589,-2.729 -9.545,-5.897 -9.545,-5.897C-10.286,-7.779 -11.354,-8.28 -11.354,-8.28C-12.833,-9.29 -11.242,-9.27 -11.242,-9.27C-9.607,-9.155 -8.747,-7.591 -8.747,-7.591C-7.294,-5.102 -4.934,-5.821 -4.006,-6.238C-3.858,-7.29 -3.438,-8.008 -2.972,-8.415C-6.589,-8.826 -10.392,-10.224 -10.392,-16.466C-10.392,-18.244 -9.757,-19.698 -8.715,-20.837C-8.883,-21.249 -9.442,-22.905 -8.556,-25.148C-8.556,-25.148 -7.188,-25.586 -4.076,-23.478C-2.777,-23.84 -1.383,-24.02 0.002,-24.026C1.385,-24.02 2.779,-23.84 4.08,-23.478C7.19,-25.586 8.555,-25.148 8.555,-25.148C9.444,-22.905 8.885,-21.249 8.717,-20.837C9.761,-19.698 10.392,-18.244 10.392,-16.466C10.392,-10.208 6.583,-8.831 2.954,-8.428C3.539,-7.925 4.06,-6.931 4.06,-5.411C4.06,-3.234 4.04,-1.477 4.04,-0.943C4.04,-0.507 4.333,0 5.16,-0.159C11.628,-2.318 16.291,-8.419 16.291,-15.614C16.291,-24.611 8.997,-31.904 0,-31.904" style="fill:white;"/>
     </g>
 </svg>
-</a></div>
+</a></div></div></div>
 
 </div>
 
@@ -266,7 +282,7 @@ void main() {
 </code></pre><p>We need to setup the texture coordinates</p>
 <pre class="prettyprint notranslate" translate="no"><code class="notranslate" translate="no">// look up where the vertex data needs to go.
 var positionLocation = gl.getAttribLocation(program, &quot;a_position&quot;);
-*var texcoordLocation = gl.getAttribLocation(program, &quot;a_texcoords&quot;);
+*var texcoordLocation = gl.getAttribLocation(program, &quot;a_texcoord&quot;);
 
 ...
 
@@ -396,7 +412,7 @@ software like Blender, Maya, 3D Studio Max, then your artists (or you)
 will adjust texture coordinates in those packages.</p>
 <p>So what happens if we use texture coordinates outside the 0.0 to 1.0
 range.  By default WebGL repeats the texture.  0.0 to 1.0 is one &#39;copy&#39; of
-the texture.  1.0 to 2.0 is another copy.  even -4.0 to -3.0 is yet
+the texture.  1.0 to 2.0 is another copy.  Even -4.0 to -3.0 is yet
 another copy.  Let&#39;s display a plane using these texture coordinates.</p>
 <pre class="prettyprint notranslate" translate="no"><code class="notranslate" translate="no"> -3, -1,
   2, -1,
@@ -404,7 +420,7 @@ another copy.  Let&#39;s display a plane using these texture coordinates.</p>
  -3,  4,
   2, -1,
   2,  4,
-</code></pre><p>and here it is</p>
+</code></pre><p>And here it is</p>
 <p><div class="webgl_example_container">
   <iframe class="webgl_example" style=" " src="/webgl/resources/editor.html?url=/webgl/lessons/..%2Fwebgl-3d-textures-repeat-clamp.html"></iframe>
   <a class="webgl_center" href="/webgl/lessons/../webgl-3d-textures-repeat-clamp.html" target="_blank">click here to open in a separate window</a>
@@ -425,7 +441,7 @@ pixels to choose from.  In Photoshop if you scaled a 16x16 pixel image to
 2x2 it would average the 8x8 pixels in each corner to make the 4 pixels in
 a 2x2 image.  Unfortunately reading 64 pixels and averaging them all
 together would be way too slow for a GPU.  In fact imagine if you had a
-2048x2084 pixel texture and you tried to draw it 2x2 pixels.  To do what
+2048x2048 pixel texture and you tried to draw it 2x2 pixels.  To do what
 Photoshop does for each of the 4 pixels in the 2x2 result it would have to
 average 1024x1024 pixel or 1 million pixels times 4.  That&#39;s way way too
 much to do and still be fast.</p>
@@ -607,7 +623,7 @@ to map a different part of the texture to each face of the cube. This is the tec
 all high performance apps (read <em>games</em>) use. So for example we&#39;d put all the images in one texture possibly
 like this</p>
 <p><img class="webgl_center" src="../resources/noodles.jpg" /></p>
-<p>and then use a different set of texture coordinates for each face of the cube.</p>
+<p>And then use a different set of texture coordinates for each face of the cube.</p>
 <pre class="prettyprint notranslate" translate="no"><code class="notranslate" translate="no">    // select the top left image
     0   , 0  ,
     0   , 0.5,
@@ -832,7 +848,7 @@ in graphics people have called them Ew-Vees.
         <ul>
           <li><a href="/webgl/lessons/webgl-attributes.html">Attributes</a></li>
 <li><a href="/webgl/lessons/webgl-texture-units.html">Texture Units</a></li>
-<li><a href="/webgl/lessons/webgl-framebuffers.html">undefined</a></li>
+<li><a href="/webgl/lessons/webgl-framebuffers.html">Framebuffers</a></li>
 <li><a href="/webgl/lessons/webgl-readpixels.html">readPixels</a></li>
 <li><a href="/webgl/lessons/webgl-references.html">References</a></li>
         </ul></ul>
@@ -875,20 +891,29 @@ in graphics people have called them Ew-Vees.
   </div>
 </div>
 </body>
+<script>
+const settings = {
+  contribTemplate: "Thank you <a href=\"${html_url}\"><img src=\"${avatar_url}\"> ${login}</a><br>for <a href=\"https://github.com/${owner}/${repo}/commits?author=${login}\">${contributions} contributions</a>",
+  owner: "gfxfundamentals",
+  repo: "webgl-fundamentals",
+};
+</script>
+<script src="/contributors.js"></script>
 <script src="/3rdparty/jquery-1.11.2.min.js"></script>
 <script src="/webgl/lessons/resources/prettify.js"></script>
-<script src="/webgl/lessons/resources/lesson.js"></script>
+<script src="/webgl/lessons/resources/lesson.js" type="module"></script>
 <script>
 (function() {
   if (window.location.hostname.indexOf("webglfundamentals.org") < 0) {
       return;
   }
 
-  function addScript(src, fn) {
+  function addScript(src, type, fn) {
     const script = document.createElement('script');
     const firstScript = document.getElementsByTagName('script')[0];
     script.async = true;
     script.defer = true;
+    script.type = type || 'javascript';
     if (fn) {
       script.addEventListener('load', fn);
     }
@@ -896,7 +921,8 @@ in graphics people have called them Ew-Vees.
     firstScript.parentNode.insertBefore(script, firstScript);
   }
 
-  addScript('//cdn.webglstats.com/stat.js');
+  // can't do this because it would eat contexts
+  //addScript('//gpustats.org/stats.js', 'module');
 
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

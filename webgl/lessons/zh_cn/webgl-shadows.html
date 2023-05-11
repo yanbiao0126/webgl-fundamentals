@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<!-- this file is auto-generated from webgl/lessons/zh_cn/webgl-shadows.md. Do not edited directly -->
+<!--
+Copyright 2021 GFXFundamentals.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+*   Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+
+*   Redistributions in binary form must reproduce the above
+    copyright notice, this list of conditions and the following disclaimer
+    in the documentation and/or other materials provided with the
+    distribution.
+
+*   Neither the name of GFXFundamentals. nor the names of his
+    contributors may be used to endorse or promote products derived from
+    this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="如何计算阴影">
+<meta name="keywords" content="webgl graphics">
+<meta name="thumbnail" content="https://webglfundamentals.org/webgl/lessons/screenshots/webgl-shadows_zh-cn.jpg">
+
+<meta property="og:title" content="WebGL 阴影">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://webglfundamentals.org/webgl/lessons/screenshots/webgl-shadows_zh-cn.jpg">
+<meta property="og:description" content="如何计算阴影">
+<meta property="og:url" content="https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-shadows.html">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@greggman">
+<meta name="twitter:creator" content="@greggman">
+<meta name="twitter:domain" content="webglfundamentals.org">
+<meta name="twitter:title" content="WebGL 阴影">
+<meta name="twitter:url" content="https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-shadows.html">
+<meta name="twitter:description" content="如何计算阴影">
+<meta name="twitter:image:src" content="https://webglfundamentals.org/webgl/lessons/screenshots/webgl-shadows_zh-cn.jpg">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"WebSite",
+      "@id":"https://webglfundamentals.org/#website",
+      "url":"https://webglfundamentals.org/",
+      "name":"WebglFundamentals"
+    },
+    {
+      "@type":"ImageObject",
+      "@id":"https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-shadows.html#primaryimage",
+      "url":"https://webglfundamentals.org/webgl/lessons/screenshots/webgl-shadows_zh-cn.jpg",
+      "width":1200,
+      "height":630
+    },
+    {
+      "@type":"WebPage",
+      "@id":"https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-shadows.html#webpage",
+      "url":"https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-shadows.html",
+      "inLanguage":"zh-cn",
+      "name":"WebGL 阴影",
+      "keywords":"webgl graphics programming",
+      "isPartOf":{
+        "@id":"https://webglfundamentals.org/#website"
+      },
+      "primaryImageOfPage":{
+        "@id":"https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-shadows.html#primaryimage"
+      }
+    }
+  ]
+}
+</script>
+
+
+<title>WebGL 阴影</title>
+<link href="/webgl/lessons/resources/webglfundamentals-icon.png" rel="shortcut icon" type="image/png">
+<link rel="stylesheet" href="/webgl/lessons/lang.css">
+<link rel="stylesheet" href="/webgl/lessons/resources/lesson.css">
+
+  <link rel="alternate" hreflang="en" href="https://webglfundamentals.org/webgl/lessons/webgl-shadows.html">
+  <link rel="alternate" hreflang="fr" href="https://webglfundamentals.org/webgl/lessons/fr/webgl-shadows.html">
+  <link rel="alternate" hreflang="ja" href="https://webglfundamentals.org/webgl/lessons/ja/webgl-shadows.html">
+  <link rel="alternate" hreflang="ko" href="https://webglfundamentals.org/webgl/lessons/ko/webgl-shadows.html">
+  <link rel="alternate" hreflang="pl" href="https://webglfundamentals.org/webgl/lessons/pl/webgl-shadows.html">
+  <link rel="alternate" hreflang="pt-br" href="https://webglfundamentals.org/webgl/lessons/pt-br/webgl-shadows.html">
+  <link rel="alternate" hreflang="ru" href="https://webglfundamentals.org/webgl/lessons/ru/webgl-shadows.html">
+  <link rel="alternate" hreflang="zh_cn" href="https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-shadows.html">
+
+
+
+
+</head>
+<body>
+<div class="webgl_navbar">
+  <div>
+    <select class="language">
+    <option value="/webgl/lessons/webgl-shadows.html" >English</a>
+    <option value="/webgl/lessons/fr/webgl-shadows.html" >Français</a>
+    <option value="/webgl/lessons/ja/webgl-shadows.html" >日本語</a>
+    <option value="/webgl/lessons/ko/webgl-shadows.html" >한국어</a>
+    <option value="/webgl/lessons/pl/webgl-shadows.html" >Polski</a>
+    <option value="/webgl/lessons/pt-br/webgl-shadows.html" >Portuguese</a>
+    <option value="/webgl/lessons/ru/webgl-shadows.html" >Русский</a>
+    <option value="/webgl/lessons/zh_cn/webgl-shadows.html" selected>简体中文</a>
+</select>
+
+
+    <a href="#toc">目录</a>
+  </div>
+</div>
+<div class="webgl_header">
+  <h1><a href="/webgl/lessons/zh_cn/">WebGLFundamentals.org</a></h1>
+<style>
+#forkongithub>div {
+    background: #000;
+    color: #fff;
+    font-family: arial,sans-serif;
+    text-align: center;
+    font-weight: bold;
+    padding: 5px 40px;
+    font-size: 0.9rem;
+    line-height: 1.3rem;
+    position: relative;
+    transition: 0.5s;
+    display: block;
+    width: 400px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateX(200px) rotate(45deg) translate(10px,70px);
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.8);
+    pointer-events: auto;
+}
+#forkongithub a {
+  text-decoration: none;
+  color: #fff;
+}
+#forkongithub>div:hover {
+    background: #c11;
+    color: #fff;
+}
+#forkongithub .contributors {
+  font-size: 0.75rem;
+  background: rgba(255,255,255,0.2);
+  line-height: 1.2;
+  padding: 0.1em;
+}
+#forkongithub>div::before,#forkongithub>div::after {
+    content: "";
+    width: 100%;
+    display: block;
+    position: absolute;
+    top: 1px;
+    left: 0;
+    height: 1px;
+    background: #fff;
+}
+#forkongithub>div::after {
+    bottom: 1px;
+    top: auto;
+}
+
+#forkongithub{
+    z-index: 9999;
+    /* needed for firefox */
+    overflow: hidden;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    pointer-events: none;
+}
+#forkongithub svg{
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+}
+#forkongithub img {
+  width: 1em;
+  height: 1em;
+  border-radius: 100%;
+  vertical-align: middle;
+}
+
+@media (max-width: 900px) {
+    #forkongithub>div {
+        line-height: 1.2rem;
+    }
+}
+@media (max-width: 700px) {
+  #forkongithub {
+    display: none;
+  }
+}
+@media (max-width: 410px) {
+    #forkongithub>div {
+        font-size: 0.7rem;
+        transform: translateX(150px) rotate(45deg) translate(20px,40px);
+    }
+}
+
+</style>
+<div id="forkongithub"><div><div><a href="https://github.com/gfxfundamentals/webgl-fundamentals">Fix, Fork, Contribute <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 136 133" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(3.92891,0,0,3.92891,67.867,129.125)">
+        <path d="M0,-31.904C-8.995,-31.904 -16.288,-24.611 -16.288,-15.614C-16.288,-8.417 -11.621,-2.312 -5.148,-0.157C-4.333,-0.008 -4.036,-0.511 -4.036,-0.943C-4.036,-1.329 -4.05,-2.354 -4.058,-3.713C-8.589,-2.729 -9.545,-5.897 -9.545,-5.897C-10.286,-7.779 -11.354,-8.28 -11.354,-8.28C-12.833,-9.29 -11.242,-9.27 -11.242,-9.27C-9.607,-9.155 -8.747,-7.591 -8.747,-7.591C-7.294,-5.102 -4.934,-5.821 -4.006,-6.238C-3.858,-7.29 -3.438,-8.008 -2.972,-8.415C-6.589,-8.826 -10.392,-10.224 -10.392,-16.466C-10.392,-18.244 -9.757,-19.698 -8.715,-20.837C-8.883,-21.249 -9.442,-22.905 -8.556,-25.148C-8.556,-25.148 -7.188,-25.586 -4.076,-23.478C-2.777,-23.84 -1.383,-24.02 0.002,-24.026C1.385,-24.02 2.779,-23.84 4.08,-23.478C7.19,-25.586 8.555,-25.148 8.555,-25.148C9.444,-22.905 8.885,-21.249 8.717,-20.837C9.761,-19.698 10.392,-18.244 10.392,-16.466C10.392,-10.208 6.583,-8.831 2.954,-8.428C3.539,-7.925 4.06,-6.931 4.06,-5.411C4.06,-3.234 4.04,-1.477 4.04,-0.943C4.04,-0.507 4.333,0 5.16,-0.159C11.628,-2.318 16.291,-8.419 16.291,-15.614C16.291,-24.611 8.997,-31.904 0,-31.904" style="fill:white;"/>
+    </g>
+</svg>
+</a></div></div></div>
+
+</div>
+
+
+<div class="container">
+  <div class="lesson-title">
+    <h1>WebGL 阴影</h1>
+  </div>
+  <div class="lesson">
+    <div class="lesson-main">
+      <p>让我们绘制一些阴影！</p>
+<h2 id="-">前提条件</h2>
+<p>计算基本的阴影并没有<em>那么</em>难，但是需要一些背景知识。为了能够理解本文，你需要已经理解以下话题。</p>
+<ul>
+<li><a href="webgl-3d-orthographic.html">正射投影</a></li>
+<li><a href="webgl-3d-perspective.html">透视投影</a></li>
+<li><a href="webgl-3d-lighting-spot.html">聚光灯</a></li>
+<li><a href="webgl-3d-textures.html">纹理</a></li>
+<li><a href="webgl-render-to-texture.html">渲染到纹理</a></li>
+<li><a href="webgl-planar-projection-mapping.html">投影纹理</a></li>
+<li><a href="webgl-visualizing-the-camera.html">可视化相机</a></li>
+</ul>
+<p>因此，如果你还没有阅读过这些话题，请先去读一下。</p>
+<p>首先，本文假设你已经读过 <a href="webgl-less-code-more-fun.html">码少趣多</a>，因为本文使用到了那里提到的库，以便使得本文的例子更整洁。如果你不明白 <code class="notranslate" translate="no">webglUtils.setBuffersAndAttributes</code> 函数是设置 buffers 和 attributes 的，或者不明白 <code class="notranslate" translate="no">webglUtils.setUniforms</code> 函数是设置 uniforms 的，等等之类的函数你都不能理解，那么你可能要往回 <a href="webgl-fundamentals.html">read the fundamentals</a>。</p>
+<p>首先，绘制阴影的方法不止一种。每一种方法都有它们的优缺点。绘制阴影最常见的方法是使用阴影映射（shadow map）。</p>
+<p>阴影映射是通过组合上面前提条件文章中提到的技术来实现的。</p>
+<p>在 <a href="webgl-planar-projection-mapping.html">平面的投影映射文章</a> 中，我们知道了如何将一张图像投影到物体上</p>
+<p><div class="webgl_example_container">
+  <iframe class="webgl_example" style=" " src="/webgl/resources/editor.html?url=/webgl/lessons/..%2Fwebgl-planar-projection-with-projection-matrix.html"></iframe>
+  <a class="webgl_center" href="/webgl/lessons/../webgl-planar-projection-with-projection-matrix.html" target="_blank">点此在新窗口中浏览</a>
+</div>
+
+</p>
+<p>回想一下，我们并没有把那张图像绘制在场景的物体上，而是在物体被渲染的时候，对于每一个像素，我们都会检查被投影的纹理是否在范围内，如果在范围内，我们会从被投影的纹理中采样相应的颜色，如果不在范围内，则我们就会从另一个不同的纹理中采样一个颜色，纹理的颜色是通过使用纹理坐标进行查找的，纹理坐标把一个纹理映射到了物体上。</p>
+<p>如果被投影的纹理里包含了来自光源视角的深度数据，则会怎么样？换句话说，假设上面的例子中，在视椎体的顶端有一个光源，而被投影的纹理包含了在该光源视角下的深度信息。结果是，球体会得到一个更加接近光源的深度值，而平面会得到一个稍微远离光源的深度值。</p>
+<div class="webgl_center"><img class="noinvertdark" src="../resources/depth-map-generation.svg" style="width: 600px;"></div>
+
+<p>如果我们具有了这些深度信息，那么我们在选择要渲染哪个颜色的时候，我们就可以从被投影的纹理中进行采样，得到一个采样深度值，然后和当前正在绘制的像素的深度值进行比较。如果当前像素的深度值比采样得到的深度值大，则说明还有其他东西比当前像素更加接近光源。也就是说，某样东西挡住了光源，因此该像素是处于阴影中的。</p>
+<div class="webgl_center"><img class="noinvertdark" src="../resources/projected-depth-texture.svg" style="width: 600px;"></div>
+
+<p>其中，深度纹理被投影到光源视角下的视椎体内。当我们绘制地板的像素时，我们会计算在光源视角下，该像素的深度值（在上图中是 0.3）。然后我们在被投影的深度纹理中找到对应的深度值。在光源视角下，纹理内的深度值是 0.1，因为光线首先击中的是球体。因为 0.1 &lt; 0.3，所以我们知道该位置的地板一定在阴影内。</p>
+<p>首先，我们来绘制阴影映射。我们会取 <a href="webgl-planar-projection-mapping.html">平面的投影映射文章</a> 的最后一个示例，但我们并不是加载一个纹理，我们会 <a href="webgl-render-to-texture.html">渲染到纹理</a>。在 <a href="webgl-render-to-texture.html">那篇文章</a> 中，我们使用了一个深度渲染缓冲。这为我们提供了一个深度缓冲，以帮助对像素的排序，但是，我们并不能使用一个深度渲染缓冲作为一个纹理输入到着色器中。幸运的是，有一个名为 <code class="notranslate" translate="no">WEBGL_depth_texture</code> 的 WebGL 扩展，我们可以尝试开启该扩展，它会给我们提供深度纹理。有了深度纹理，我们就可以把它附加到一个帧缓冲 上，然后使用该纹理作为着色器的输入。检查并开启该扩展的代码是：</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">function main() {
+  // 获得一个 WebGL context
+  /** @type {HTMLCanvasElement} */
+  const canvas = document.querySelector(&#39;#canvas&#39;);
+  const gl = canvas.getContext(&#39;webgl&#39;);
+  if (!gl) {
+    return;
+  }
+
++  const ext = gl.getExtension(&#39;WEBGL_depth_texture&#39;);
++  if (!ext) {
++    return;
++  }
+}
+</code></pre>
+<p>现在，和 <a href="webgl-render-to-texture.html">渲染到纹理文章</a> 中的类似，我们创建一个纹理和一个帧缓冲，然后把该纹理作为 <code class="notranslate" translate="no">DEPTH_ATTACHMENT</code> 附加到帧缓冲上。</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">const depthTexture = gl.createTexture();
+const depthTextureSize = 512;
+gl.bindTexture(gl.TEXTURE_2D, depthTexture);
+gl.texImage2D(
+    gl.TEXTURE_2D,      // target
+    0,                  // mip level
+    gl.DEPTH_COMPONENT, // internal format
+    depthTextureSize,   // width
+    depthTextureSize,   // height
+    0,                  // border
+    gl.DEPTH_COMPONENT, // format
+    gl.UNSIGNED_INT,    // type
+    null);              // data
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+
+const depthFramebuffer = gl.createFramebuffer();
+gl.bindFramebuffer(gl.FRAMEBUFFER, depthFramebuffer);
+gl.framebufferTexture2D(
+    gl.FRAMEBUFFER,       // target
+    gl.DEPTH_ATTACHMENT,  // attachment point
+    gl.TEXTURE_2D,        // texture target
+    depthTexture,         // texture
+    0);                   // mip level
+</code></pre>
+<p><a href="#attachment-combinations">由于种种原因</a>，我们还需要创建一个颜色纹理并把它作为一个 color attachment 附加到帧缓冲上，即使我们并不会使用它。</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">// 创建一个和深度纹理相同尺寸的颜色纹理
+const unusedTexture = gl.createTexture();
+gl.bindTexture(gl.TEXTURE_2D, unusedTexture);
+gl.texImage2D(
+    gl.TEXTURE_2D,
+    0,
+    gl.RGBA,
+    depthTextureSize,
+    depthTextureSize,
+    0,
+    gl.RGBA,
+    gl.UNSIGNED_BYTE,
+    null,
+);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+
+// 把它附加到该帧缓冲上
+gl.framebufferTexture2D(
+    gl.FRAMEBUFFER,        // target
+    gl.COLOR_ATTACHMENT0,  // attachment point
+    gl.TEXTURE_2D,         // texture target
+    unusedTexture,         // texture
+    0);                    // mip level
+</code></pre>
+<p>为了使用深度纹理，我们还需要能够使用不同的着色器来渲染场景多次。一次是一个简单的着色器，只是为了渲染到深度纹理上，然后再使用我们当前的着色器，该着色器会投影一个纹理。</p>
+<p>因此，首先让我们来修改一下 <code class="notranslate" translate="no">drawScene</code> 函数，以便我们可以传入我们想要用来渲染的着色器程序</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">-function drawScene(projectionMatrix, cameraMatrix, textureMatrix) {
++function drawScene(projectionMatrix, cameraMatrix, textureMatrix, programInfo) {
+  // 从相机矩阵中创建一个视图矩阵
+  const viewMatrix = m4.inverse(cameraMatrix);
+
+-  gl.useProgram(textureProgramInfo.program);
++  gl.useProgram(programInfo.program);
+
+  // 设置对于球体和平面都是一样的 uniforms
+  // 注意：在着色器中，任何没有对应 uniform 的值都会被忽略。
+-  webglUtils.setUniforms(textureProgramInfo, {
++  webglUtils.setUniforms(programInfo, {
+    u_view: viewMatrix,
+    u_projection: projectionMatrix,
+*    u_textureMatrix: textureMatrix,
+-    u_projectedTexture: imageTexture,
++    u_projectedTexture: depthTexture,
+  });
+
+  // ------ 绘制球体 --------
+
+  // 设置所有需要的 attributes
+-  webglUtils.setBuffersAndAttributes(gl, textureProgramInfo, sphereBufferInfo);
++  webglUtils.setBuffersAndAttributes(gl, programInfo, sphereBufferInfo);
+
+  // 设置球体特有的 uniforms
+-  webglUtils.setUniforms(textureProgramInfo, sphereUniforms);
++  webglUtils.setUniforms(programInfo, sphereUniforms);
+
+  // 调用 gl.drawArrays 或 gl.drawElements
+  webglUtils.drawBufferInfo(gl, sphereBufferInfo);
+
+  // ------ 绘制平面 --------
+
+  // 设置所有需要的 attributes
+-  webglUtils.setBuffersAndAttributes(gl, textureProgramInfo, planeBufferInfo);
++  webglUtils.setBuffersAndAttributes(gl, programInfo, planeBufferInfo);
+
+  // 设置我们刚刚计算的 uniforms
+-  webglUtils.setUniforms(textureProgramInfo, planeUniforms);
++  webglUtils.setUniforms(programInfo, planeUniforms);
+
+  // 调用 gl.drawArrays 或 gl.drawElements
+  webglUtils.drawBufferInfo(gl, planeBufferInfo);
+}
+</code></pre>
+<p>现在，让我们使用该函数从光源视角绘制一次场景，然后使用深度纹理再绘制一次场景</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">function render() {
+  webglUtils.resizeCanvasToDisplaySize(gl.canvas);
+
+  gl.enable(gl.CULL_FACE);
+  gl.enable(gl.DEPTH_TEST);
+
+  // 首先从光源的视角绘制一次
+-  const textureWorldMatrix = m4.lookAt(
++  const lightWorldMatrix = m4.lookAt(
+      [settings.posX, settings.posY, settings.posZ],          // position
+      [settings.targetX, settings.targetY, settings.targetZ], // target
+      [0, 1, 0],                                              // up
+  );
+-  const textureProjectionMatrix = settings.perspective
++  const lightProjectionMatrix = settings.perspective
+      ? m4.perspective(
+          degToRad(settings.fieldOfView),
+          settings.projWidth / settings.projHeight,
+          0.5,  // near
+          10)   // far
+      : m4.orthographic(
+          -settings.projWidth / 2,   // left
+           settings.projWidth / 2,   // right
+          -settings.projHeight / 2,  // bottom
+           settings.projHeight / 2,  // top
+           0.5,                      // near
+           10);                      // far
+
++  // 绘制到深度纹理
++  gl.bindFramebuffer(gl.FRAMEBUFFER, depthFramebuffer);
++  gl.viewport(0, 0, depthTextureSize, depthTextureSize);
++  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+-  drawScene(textureProjectionMatrix, textureWorldMatrix, m4.identity());
++  drawScene(lightProjectionMatrix, lightWorldMatrix, m4.identity(), colorProgramInfo);
+
++  // 现在绘制场景到画布，把深度纹理投影到场景内
++  gl.bindFramebuffer(gl.FRAMEBUFFER, null);
++  gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
++  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+  let textureMatrix = m4.identity();
+  textureMatrix = m4.translate(textureMatrix, 0.5, 0.5, 0.5);
+  textureMatrix = m4.scale(textureMatrix, 0.5, 0.5, 0.5);
+-  textureMatrix = m4.multiply(textureMatrix, textureProjectionMatrix);
++  textureMatrix = m4.multiply(textureMatrix, lightProjectionMatrix);
+  // 使用该世界矩阵的逆矩阵来创建一个
+  // 可以变换其他坐标为相对于这个世界空间
+  // 的矩阵。
+  textureMatrix = m4.multiply(
+      textureMatrix,
+-      m4.inverse(textureWorldMatrix));
++      m4.inverse(lightWorldMatrix));
+
+  // 计算投影矩阵
+  const aspect = gl.canvas.clientWidth / gl.canvas.clientHeight;
+  const projectionMatrix =
+      m4.perspective(fieldOfViewRadians, aspect, 1, 2000);
+
+  // 使用 look at 计算相机的矩阵
+  const cameraPosition = [settings.cameraX, settings.cameraY, 7];
+  const target = [0, 0, 0];
+  const up = [0, 1, 0];
+  const cameraMatrix = m4.lookAt(cameraPosition, target, up);
+
+-  drawScene(projectionMatrix, cameraMatrix, textureMatrix); 
++  drawScene(projectionMatrix, cameraMatrix, textureMatrix, textureProgramInfo); 
+}
+</code></pre>
+<p>注意，我把 <code class="notranslate" translate="no">textureWorldMatrix</code> 重命名成了 <code class="notranslate" translate="no">lightWorldMatrix</code>，而 <code class="notranslate" translate="no">textureProjectionMatrix</code> 重命名成了 <code class="notranslate" translate="no">lightProjectionMatrix</code>。它们和之前还是一样的，只不过之前我们是投影纹理到一个任意空间内的。现在我们尝试从光源视角投影一个阴影映射。在数学上是一样的，但重命名这些变量似乎更合适。</p>
+<p>在上面的代码中，我们首先使用之前绘制视椎体线框的着色器来渲染球体和平面到深度纹理中。那个着色器只会绘制了纯色的东西，并没有做什么特别的事情，这就是当渲染到深度纹理时我们所需要做的全部事情。</p>
+<p>然后，我们再渲染场景到画布中，就像我们之前做的那样，把纹理投影到场景内。当我们在着色器内引用深度纹理时，只有红色分量是有效的，所以我们会重复红色分量作为绿色分量和蓝色分量。</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-glsl">void main() {
+  vec3 projectedTexcoord = v_projectedTexcoord.xyz / v_projectedTexcoord.w;
+  bool inRange = 
+      projectedTexcoord.x &gt;= 0.0 &amp;&amp;
+      projectedTexcoord.x &lt;= 1.0 &amp;&amp;
+      projectedTexcoord.y &gt;= 0.0 &amp;&amp;
+      projectedTexcoord.y &lt;= 1.0;
+
+-  vec4 projectedTexColor = texture2D(u_projectedTexture, projectedTexcoord.xy);
++  // &#39;r&#39; 通道内包含深度值
++  vec4 projectedTexColor = vec4(texture2D(u_projectedTexture, projectedTexcoord.xy).rrr, 1);
+  vec4 texColor = texture2D(u_texture, v_texcoord) * u_colorMult;
+  float projectedAmount = inRange ? 1.0 : 0.0;
+  gl_FragColor = mix(texColor, projectedTexColor, projectedAmount);
+}
+</code></pre>
+<p>趁此机会，让我们添加一个立方体到场景中</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">+const cubeBufferInfo = primitives.createCubeBufferInfo(
++    gl,
++    2,  // size
++);
+
+...
+
++const cubeUniforms = {
++  u_colorMult: [0.5, 1, 0.5, 1],  // 绿色的光源
++  u_color: [0, 0, 1, 1],
++  u_texture: checkerboardTexture,
++  u_world: m4.translation(3, 1, 0),
++};
+
+...
+
+function drawScene(projectionMatrix, cameraMatrix, textureMatrix, programInfo) {
+
+    ...
+
++    // ------ 绘制立方体 --------
++
++    // 设置所需要的所有 attributes
++    webglUtils.setBuffersAndAttributes(gl, programInfo, cubeBufferInfo);
++
++    // 设置我们刚刚计算的 uniforms
++    webglUtils.setUniforms(programInfo, cubeUniforms);
++
++    // 调用 gl.drawArrays 或 gl.drawElements
++    webglUtils.drawBufferInfo(gl, cubeBufferInfo);
+
+...
+</code></pre>
+<p>然后让我们来调整一下设置。我们会移动相机和为了使纹理投影可以覆盖到的范围更大，我们会加宽视场角。</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">const settings = {
+-  cameraX: 2.5,
++  cameraX: 6,
+  cameraY: 5,
+  posX: 2.5,
+  posY: 4.8,
+  posZ: 4.3,
+  targetX: 2.5,
+  targetY: 0,
+  targetZ: 3.5,
+  projWidth: 1,
+  projHeight: 1,
+  perspective: true,
+-  fieldOfView: 45,
++  fieldOfView: 120,
+};
+</code></pre>
+<p>注意：我把绘制表示视椎体的线框立方体的代码移到了 <code class="notranslate" translate="no">drawScene</code> 函数的外面。</p>
+<p><div class="webgl_example_container">
+  <iframe class="webgl_example" style=" " src="/webgl/resources/editor.html?url=/webgl/lessons/..%2Fwebgl-shadows-depth-texture.html"></iframe>
+  <a class="webgl_center" href="/webgl/lessons/../webgl-shadows-depth-texture.html" target="_blank">点此在新窗口中浏览</a>
+</div>
+
+</p>
+<p>这和上面的例子是完全一样的，只不过我们不是通过加载一个图像，而是通过渲染场景来生成一个深度纹理。如果你想要验证的话，可以把 <code class="notranslate" translate="no">cameraX</code> 改回 2.5，把 <code class="notranslate" translate="no">fieldOfView</code> 改回 45，这样就会和上面例子看起来一样了，除了我们投影的是深度纹理，而不是加载一个图像外。</p>
+<p>深度值的范围是 0.0 到 1.0，代表它们在视椎体内的位置，因此 0.0（暗）表示接近视椎体的顶端的那端，而 1.0（亮）则是位于较远的开口那端。</p>
+<p>因此，剩下要做的就是，我们不在投影纹理的颜色和映射纹理的颜色中做选择，我们可以使用深度纹理中的深度值来检查深度纹理的 Z 位置是离光源更近还是更远，然后再检查要绘制的像素的深度值。如果深度纹理的深度值更小，则表明有某物挡住了光源，该像素位于阴影中。</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-glsl">void main() {
+  vec3 projectedTexcoord = v_projectedTexcoord.xyz / v_projectedTexcoord.w;
++  float currentDepth = projectedTexcoord.z;
+
+  bool inRange = 
+      projectedTexcoord.x &gt;= 0.0 &amp;&amp;
+      projectedTexcoord.x &lt;= 1.0 &amp;&amp;
+      projectedTexcoord.y &gt;= 0.0 &amp;&amp;
+      projectedTexcoord.y &lt;= 1.0;
+
+-  vec4 projectedTexColor = vec4(texture2D(u_projectedTexture, projectedTexcoord.xy).rrr, 1);
++  float projectedDepth = texture2D(u_projectedTexture, projectedTexcoord.xy).r;
++  float shadowLight = (inRange &amp;&amp; projectedDepth &lt;= currentDepth) ? 0.0 : 1.0;  
+
+  vec4 texColor = texture2D(u_texture, v_texcoord) * u_colorMult;
+-  gl_FragColor = mix(texColor, projectedTexColor, projectedAmount);
++  gl_FragColor = vec4(texColor.rgb * shadowLight, texColor.a);
+}
+</code></pre>
+<p>在上面的代码中，如果 <code class="notranslate" translate="no">projectedDepth</code> 小于 <code class="notranslate" translate="no">currentDepth</code> ，则从光源视角来看，有某物更加接近光源，所以正在绘制的像素位于阴影中。</p>
+<p>如果我们运行它，我们就会得到一个阴影</p>
+<p><div class="webgl_example_container">
+  <iframe class="webgl_example" style=" " src="/webgl/resources/editor.html?url=/webgl/lessons/..%2Fwebgl-shadows-basic.html"></iframe>
+  <a class="webgl_center" href="/webgl/lessons/../webgl-shadows-basic.html" target="_blank">点此在新窗口中浏览</a>
+</div>
+
+</p>
+<p>有点像样了，我们可以在地面看到球体的阴影，但是这些位于应该没有阴影的地方的奇怪图案是什么？这些图案被称为<em>阴影痤疮（shadow acne）</em>。这些图案的来源是因为存储在深度纹理里的深度数据已经被量化了，深度数据已经是一个纹理，一个像素网格了，它被从光源视角中投影出来，但是我们要把它和相机视角的深度值进行比较。即意味着在这个深度纹理网格中的值和我们相机没有对齐，因此，当我们计算 <code class="notranslate" translate="no">currentDepth</code> 时，有时会出现比 <code class="notranslate" translate="no">projectedDepth</code> 稍微大的值，有时会出现稍微小的值。</p>
+<p>让我们添加一个偏差值（bias）。</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-glsl">...
+
++uniform float u_bias;
+
+void main() {
+  vec3 projectedTexcoord = v_projectedTexcoord.xyz / v_projectedTexcoord.w;
+-  float currentDepth = projectedTexcoord.z;
++  float currentDepth = projectedTexcoord.z + u_bias;
+
+  bool inRange = 
+      projectedTexcoord.x &gt;= 0.0 &amp;&amp;
+      projectedTexcoord.x &lt;= 1.0 &amp;&amp;
+      projectedTexcoord.y &gt;= 0.0 &amp;&amp;
+      projectedTexcoord.y &lt;= 1.0;
+
+  float projectedDepth = texture2D(u_projectedTexture, projectedTexcoord.xy).r;
+  float shadowLight = (inRange &amp;&amp; projectedDepth &lt;= currentDepth) ? 0.0 : 1.0;  
+
+  vec4 texColor = texture2D(u_texture, v_texcoord) * u_colorMult;
+  gl_FragColor = vec4(texColor.rgb * shadowLight, texColor.a);
+}
+</code></pre>
+<p>而且我们需要设置它</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">const settings = {
+  cameraX: 2.75,
+  cameraY: 5,
+  posX: 2.5,
+  posY: 4.8,
+  posZ: 4.3,
+  targetX: 2.5,
+  targetY: 0,
+  targetZ: 3.5,
+  projWidth: 1,
+  projHeight: 1,
+  perspective: true,
+  fieldOfView: 120,
++  bias: -0.006,
+};
+
+...
+
+function drawScene(projectionMatrix, cameraMatrix, textureMatrix, programInfo, /**/u_lightWorldMatrix) {
+  // 从相机矩阵中创建一个视图矩阵
+  const viewMatrix = m4.inverse(cameraMatrix);
+
+  gl.useProgram(programInfo.program);
+
+  // 设置对于球体和平面都是一样的 uniforms
+  // 注意：在着色器中，任何没有对应 uniform 的值都会被忽略。
+  webglUtils.setUniforms(programInfo, {
+    u_view: viewMatrix,
+    u_projection: projectionMatrix,
++    u_bias: settings.bias,
+    u_textureMatrix: textureMatrix,
+    u_projectedTexture: depthTexture,
+  });
+
+  ...
+</code></pre>
+<p><div class="webgl_example_container">
+  <iframe class="webgl_example" style=" " src="/webgl/resources/editor.html?url=/webgl/lessons/..%2Fwebgl-shadows-basic-w-bias.html"></iframe>
+  <a class="webgl_center" href="/webgl/lessons/../webgl-shadows-basic-w-bias.html" target="_blank">点此在新窗口中浏览</a>
+</div>
+
+</p>
+<p>滑动偏差值，你可以看到它如何影响图案的出现时间和出现地方。</p>
+<p>为了更接近于完整，让我们真地添加一个聚光灯，聚光灯的计算方法从 <a href="webgl-3d-lighting-spot.html">聚光灯文章</a> 中来。</p>
+<p>首先，让我们直接从 <a href="webgl-3d-lighting-spot.html">那篇文章</a> 中粘贴我们需要的部分到顶点着色器中。</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-glsl">attribute vec4 a_position;
+attribute vec2 a_texcoord;
++attribute vec3 a_normal;
+
++uniform vec3 u_lightWorldPosition;
++uniform vec3 u_viewWorldPosition;
+
+uniform mat4 u_projection;
+uniform mat4 u_view;
+uniform mat4 u_world;
+uniform mat4 u_textureMatrix;
+
+varying vec2 v_texcoord;
+varying vec4 v_projectedTexcoord;
++varying vec3 v_normal;
+
++varying vec3 v_surfaceToLight;
++varying vec3 v_surfaceToView;
+
+void main() {
+  // 将坐标乘以矩阵
+  vec4 worldPosition = u_world * a_position;
+
+  gl_Position = u_projection * u_view * worldPosition;
+
+  // 将纹理坐标传给片段着色器
+  v_texcoord = a_texcoord;
+
+  v_projectedTexcoord = u_textureMatrix * worldPosition;
+
++  // 调整法线方位并传给片段着色器
++  v_normal = mat3(u_world) * a_normal;
++
++  // 计算物体表面的世界坐标
++  vec3 surfaceWorldPosition = (u_world * a_position).xyz;
++
++  // 计算物体表面指向光源的向量
++  // 然后将它传给片段着色器
++  v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
++
++  // 计算物体表面指向相机的向量
++  // 然后将它传给片段着色器
++  v_surfaceToView = u_viewWorldPosition - surfaceWorldPosition;
+}
+</code></pre>
+<p>接着是片段着色器</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-glsl">precision mediump float;
+
+// 从顶点着色器中传入
+varying vec2 v_texcoord;
+varying vec4 v_projectedTexcoord;
++varying vec3 v_normal;
++varying vec3 v_surfaceToLight;
++varying vec3 v_surfaceToView;
+
+uniform vec4 u_colorMult;
+uniform sampler2D u_texture;
+uniform sampler2D u_projectedTexture;
+uniform float u_bias;
++uniform float u_shininess;
++uniform vec3 u_lightDirection;
++uniform float u_innerLimit;          // in dot space
++uniform float u_outerLimit;          // in dot space
+
+void main() {
++  // 因为 v_normal 是一个 varying，它已经被插值了
++  // 所以它不会是一个单位向量。对它进行归一化
++  // 使其再次成为单位向量
++  vec3 normal = normalize(v_normal);
++
++  vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
++  vec3 surfaceToViewDirection = normalize(v_surfaceToView);
++  vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
++
++  float dotFromDirection = dot(surfaceToLightDirection,
++                               -u_lightDirection);
++  float limitRange = u_innerLimit - u_outerLimit;
++  float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
++  float light = inLight * dot(normal, surfaceToLightDirection);
++  float specular = inLight * pow(dot(normal, halfVector), u_shininess);
+
+  vec3 projectedTexcoord = v_projectedTexcoord.xyz / v_projectedTexcoord.w;
+  float currentDepth = projectedTexcoord.z + u_bias;
+
+  bool inRange =
+      projectedTexcoord.x &gt;= 0.0 &amp;&amp;
+      projectedTexcoord.x &lt;= 1.0 &amp;&amp;
+      projectedTexcoord.y &gt;= 0.0 &amp;&amp;
+      projectedTexcoord.y &lt;= 1.0;
+
+  // &#39;r&#39; 通道内包含深度值
+  float projectedDepth = texture2D(u_projectedTexture, projectedTexcoord.xy).r;
+  float shadowLight = (inRange &amp;&amp; projectedDepth &lt;= currentDepth) ? 0.0 : 1.0;
+
+  vec4 texColor = texture2D(u_texture, v_texcoord) * u_colorMult;
+-  gl_FragColor = vec4(texColor.rgb * shadowLight, texColor.a);
++  gl_FragColor = vec4(
++      texColor.rgb * light * shadowLight +
++      specular * shadowLight,
++      texColor.a);
+}
+</code></pre>
+<p>注意，我们只需要使用 <code class="notranslate" translate="no">shadowLight</code> 来调整 <code class="notranslate" translate="no">light</code> 和 <code class="notranslate" translate="no">specular</code> 的效果。如果一个物体位于阴影内，则没有光。</p>
+<p>然后我们还需要设置好 uniforms</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">-function drawScene(projectionMatrix, cameraMatrix, textureMatrix, programInfo) {
++function drawScene(
++    projectionMatrix,
++    cameraMatrix,
++    textureMatrix,
++    lightWorldMatrix,
++    programInfo) {
+  // 从相机矩阵中创建一个视图矩阵
+  const viewMatrix = m4.inverse(cameraMatrix);
+
+  gl.useProgram(programInfo.program);
+
+  // 设置对于球体和平面都是一样的 uniforms
+  // 注意：在着色器中，任何没有对应 uniform 的值都会被忽略。  
+  webglUtils.setUniforms(programInfo, {
+    u_view: viewMatrix,
+    u_projection: projectionMatrix,
+    u_bias: settings.bias,
+    u_textureMatrix: textureMatrix,
+    u_projectedTexture: depthTexture,
++    u_shininess: 150,
++    u_innerLimit: Math.cos(degToRad(settings.fieldOfView / 2 - 10)),
++    u_outerLimit: Math.cos(degToRad(settings.fieldOfView / 2)),
++    u_lightDirection: lightWorldMatrix.slice(8, 11).map(v =&gt; -v),
++    u_lightWorldPosition: lightWorldMatrix.slice(12, 15),
++    u_viewWorldPosition: cameraMatrix.slice(12, 15),
+  });
+
+...
+
+function render() {
+  ...
+
+-  drawScene(lightProjectionMatrix, lightWorldMatrix, m4.identity(), colorProgramInfo);
++  drawScene(
++      lightProjectionMatrix,
++      lightWorldMatrix,
++      m4.identity(),
++      lightWorldMatrix,
++      colorProgramInfo);
+
+  ...
+
+-  drawScene(projectionMatrix, cameraMatrix, textureMatrix, textureProgramInfo);
++  drawScene(
++      projectionMatrix,
++      cameraMatrix,
++      textureMatrix,
++      lightWorldMatrix,
++      textureProgramInfo);
+
+  ...
+}
+</code></pre>
+<p>介绍一下其中一些 uniform 设置。回想一下 <a href="webgl-3d-lighting-spot.html">聚光灯文章</a> 的 innerLimit 和 outerLimit 设置都是在点乘空间（余弦空间）内的，而我们只需要一半的视场角，因为它们会绕着光源的方向进行延伸。再回想一下 <a href="webgl-3d-camera.html">相机文章</a> 中 4x4 矩阵的第 3 行是 Z 轴，所以我们从 <code class="notranslate" translate="no">lightWorldMatrix</code> 的第 3 行中拉取前 3 个值，就会得到光源的 -Z 方向。我们想要的是 +Z 方向，所以我们对它进行翻转。类似地，相机文章还告诉了我们，第 4 行是世界坐标，所以我们可以通过从对应矩阵中把它们拉取出来得到 lightWorldPosition 和 viewWorldPosition（即相机的世界坐标）。当然，我们也可以通过暴露更多的设置或者传入更多的变量来得到它们。</p>
+<p>让我们把背景清除为黑色，并设置视椎体线框为白色</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">function render() {
+
+  ...
+
+  // 现在绘制场景到画布，并投影深度纹理到场景
+  gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+  gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
++  gl.clearColor(0, 0, 0, 1);
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+  ...
+
+  // ------ 绘制视椎体 ------
+  {
+
+    ...
+
+          // 设置我们刚刚计算的 uniforms
+    webglUtils.setUniforms(colorProgramInfo, {
+-      u_color: [0, 0, 0, 1],
++      u_color: [1, 1, 1, 1],
+      u_view: viewMatrix,
+      u_projection: projectionMatrix,
+      u_world: mat,
+    });
+</code></pre>
+<p>现在，我们有了一个带阴影的聚光灯。</p>
+<p><div class="webgl_example_container">
+  <iframe class="webgl_example" style=" " src="/webgl/resources/editor.html?url=/webgl/lessons/..%2Fwebgl-shadows-w-spot-light.html"></iframe>
+  <a class="webgl_center" href="/webgl/lessons/../webgl-shadows-w-spot-light.html" target="_blank">点此在新窗口中浏览</a>
+</div>
+
+</p>
+<p>对于方向光源，我们可以从 <a href="webgl-3d-lighting-directional.html">方向光源文章</a> 中拷贝它的着色器，然后将我们的投影从透视的改为正射的即可。</p>
+<p>首先是顶点着色器</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-glsl">attribute vec4 a_position;
+attribute vec2 a_texcoord;
++attribute vec3 a_normal;
+
+-uniform vec3 u_lightWorldPosition;
+-uniform vec3 u_viewWorldPosition;
+
+uniform mat4 u_projection;
+uniform mat4 u_view;
+uniform mat4 u_world;
+uniform mat4 u_textureMatrix;
+
+varying vec2 v_texcoord;
+varying vec4 v_projectedTexcoord;
+varying vec3 v_normal;
+
+-varying vec3 v_surfaceToLight;
+-varying vec3 v_surfaceToView;
+
+void main() {
+  // 将坐标乘以矩阵
+  vec4 worldPosition = u_world * a_position;
+
+  gl_Position = u_projection * u_view * worldPosition;
+
+  // 将纹理坐标传给片段着色器
+  v_texcoord = a_texcoord;
+
+  v_projectedTexcoord = u_textureMatrix * worldPosition;
+
+  // 调整法线方位并传给片段着色器
+  v_normal = mat3(u_world) * a_normal;
+
+-  // 计算物体表面的世界坐标
+-  vec3 surfaceWorldPosition = (u_world * a_position).xyz;
+-
+-  // 计算物体表面指向光源的向量
+-  // 然后将它传给片段着色器
+-  v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
+-
+-  // 计算物体表面指向相机的向量
+-  // 然后将它传给片段着色器
+-  v_surfaceToView = u_viewWorldPosition - surfaceWorldPosition;
+}
+</code></pre>
+<p>接着是片段着色器</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-glsl">precision mediump float;
+
+// 从顶点着色器中传入
+varying vec2 v_texcoord;
+varying vec4 v_projectedTexcoord;
+varying vec3 v_normal;
+-varying vec3 v_surfaceToLight;
+-varying vec3 v_surfaceToView;
+
+uniform vec4 u_colorMult;
+uniform sampler2D u_texture;
+uniform sampler2D u_projectedTexture;
+uniform float u_bias;
+-uniform float u_shininess;
+-uniform vec3 u_lightDirection;
+-uniform float u_innerLimit;          // in dot space
+-uniform float u_outerLimit;          // in dot space
++uniform vec3 u_reverseLightDirection;
+
+void main() {
+  // 因为 v_normal 是一个 varying，它已经被插值了
+  // 所以它不会是一个单位向量。对它进行归一化
+  // 使其再次成为单位向量
+  vec3 normal = normalize(v_normal);
+
++  float light = dot(normal, u_reverseLightDirection);
+
+-  vec3 surfaceToLightDirection = normalize(v_surfaceToLight);
+-  vec3 surfaceToViewDirection = normalize(v_surfaceToView);
+-  vec3 halfVector = normalize(surfaceToLightDirection + surfaceToViewDirection);
+-
+-  float dotFromDirection = dot(surfaceToLightDirection,
+-                               -u_lightDirection);
+-  float limitRange = u_innerLimit - u_outerLimit;
+-  float inLight = clamp((dotFromDirection - u_outerLimit) / limitRange, 0.0, 1.0);
+-  float light = inLight * dot(normal, surfaceToLightDirection);
+-  float specular = inLight * pow(dot(normal, halfVector), u_shininess);
+
+  vec3 projectedTexcoord = v_projectedTexcoord.xyz / v_projectedTexcoord.w;
+  float currentDepth = projectedTexcoord.z + u_bias;
+
+  bool inRange =
+      projectedTexcoord.x &gt;= 0.0 &amp;&amp;
+      projectedTexcoord.x &lt;= 1.0 &amp;&amp;
+      projectedTexcoord.y &gt;= 0.0 &amp;&amp;
+      projectedTexcoord.y &lt;= 1.0;
+
+  // &#39;r&#39; 通道内包含深度值
+  float projectedDepth = texture2D(u_projectedTexture, projectedTexcoord.xy).r;
+  float shadowLight = (inRange &amp;&amp; projectedDepth &lt;= currentDepth) ? 0.0 : 1.0;
+
+  vec4 texColor = texture2D(u_texture, v_texcoord) * u_colorMult;
+  gl_FragColor = vec4(
+-      texColor.rgb * light * shadowLight +
+-      specular * shadowLight,
++      texColor.rgb * light * shadowLight,
+      texColor.a);
+}
+</code></pre>
+<p>和 uniforms</p>
+<pre class="prettyprint notranslate" translate="no"><code class="lang-js">  // 设置对于球体和平面都是一样的 uniforms
+  // 注意：在着色器中，任何没有对应 uniform 的值都会被忽略。
+  webglUtils.setUniforms(programInfo, {
+    u_view: viewMatrix,
+    u_projection: projectionMatrix,
+    u_bias: settings.bias,
+    u_textureMatrix: textureMatrix,
+    u_projectedTexture: depthTexture,
+-    u_shininess: 150,
+-    u_innerLimit: Math.cos(degToRad(settings.fieldOfView / 2 - 10)),
+-    u_outerLimit: Math.cos(degToRad(settings.fieldOfView / 2)),
+-    u_lightDirection: lightWorldMatrix.slice(8, 11).map(v =&gt; -v),
+-    u_lightWorldPosition: lightWorldMatrix.slice(12, 15),
+-    u_viewWorldPosition: cameraMatrix.slice(12, 15),
++    u_reverseLightDirection: lightWorldMatrix.slice(8, 11),
+  });
+</code></pre>
+<p>我调整了相机位置以便看到更大的场景。</p>
+<p><div class="webgl_example_container">
+  <iframe class="webgl_example" style=" " src="/webgl/resources/editor.html?url=/webgl/lessons/..%2Fwebgl-shadows-w-directional-light.html"></iframe>
+  <a class="webgl_center" href="/webgl/lessons/../webgl-shadows-w-directional-light.html" target="_blank">点此在新窗口中浏览</a>
+</div>
+
+</p>
+<p>从上面的代码中应该可以看出某个问题，即我们的阴影映射分辨率只有那么大，所以即使计算方向光源只需要一个方向，不需要光源本身的位置，但为了能够决定哪块区域需要计算并应用阴影映射，我们仍然需要选择一个光源位置。</p>
+<p>本文越来越长了，但还有很多和阴影相关的东西没有讲，所以我们把剩下的留到 <a href="webgl-shadows-continued.html">下一篇文章</a>。</p>
+<div class="webgl_bottombar">
+<a id="attachment-combinations"></a>
+<h3>我们为什么要创建一个不会使用的颜色纹理？</h3>
+<p>下面我们进入到 WebGL 规范的细节中。</p>
+<p>WebGL 是基于 OpenGL ES 2.0 的，而 <a href="https://www.khronos.org/registry/webgl/specs/latest/1.0/">WebGL 规范</a>
+基本上说 WebGL 遵循 OpenGL ES 2.0 规范，除了 WebGL 规范中列出的例外。</p>
+<p>当你创建一个帧缓冲时，你就会添加 attachments。你可以添加所有类型的 attachments。在上面的例子中，我们添加了一个 RGBA/UNSIGNED_BYTE 纹理 color attachment 和一个深度纹理 attachment。在渲染到纹理文章中，我们附加了一个类似的 color attachment，但我们附加的另一个 attachment 是一个深度渲染缓冲，而不是一个深度纹理。我们还可以附加一个 RGB 纹理，一个 LUMINANCE 纹理，和许多其他类型的纹理和渲染缓冲。</p>
+<p><a href="">OpenGL ES 2.0 规范</a> 给出了一堆关于某个 attachments 组合是否可以一起工作的规则。其中一个规则是至少有一个 attachment。另一个规则是它们必须具有相同的尺寸。最后的规则是</p>
+<blockquote>
+<h4>4.4.5 Framebuffer Completeness</h4>
+<p>
+The combination of internal formats of the attached images does not violate an <b>implementation-dependent</b> set of restrictions.
+</p>
+</blockquote>
+<p>
+这个不幸的措辞意味着<b>即使没有 attachments 组合也能正常工作！</b>
+</p>
+<p>
+WebGL 委员会看到了这一点并决定要求 WebGL 实现至少支持 3 种常见组合。从 <a href="https://www.khronos.org/registry/webgl/specs/latest/1.0/#6.8">WebGL 规范的第 6.8 节</a> 来看，这些组合是：
+<blockquote>
+<ul>
+  <li><code class="notranslate" translate="no">COLOR_ATTACHMENT0</code> = <code class="notranslate" translate="no">RGBA</code>/<code class="notranslate" translate="no">UNSIGNED_BYTE</code> texture</li>
+  <li><code class="notranslate" translate="no">COLOR_ATTACHMENT0</code> = <code class="notranslate" translate="no">RGBA</code>/<code class="notranslate" translate="no">UNSIGNED_BYTE</code> texture + <code class="notranslate" translate="no">DEPTH_ATTACHMENT</code> = <code class="notranslate" translate="no">DEPTH_COMPONENT16</code> renderbuffer</li>
+  <li><code class="notranslate" translate="no">COLOR_ATTACHMENT0</code> = <code class="notranslate" translate="no">RGBA</code>/<code class="notranslate" translate="no">UNSIGNED_BYTE</code> texture + <code class="notranslate" translate="no">DEPTH_STENCIL_ATTACHMENT</code> = <code class="notranslate" translate="no">DEPTH_STENCIL</code> renderbuffer</li>
+</blockquote>
+<p>
+后来 <a href="https://www.khronos.org/registry/webgl/extensions/WEBGL_depth_texture/">WEBGL_depth_texture</a> 扩展被创建。
+该扩展真正说的是，你可以创建深度纹理，你也可以附加它们到帧缓冲中，但该扩展没有说更多关于所需组合的内容。所以，考虑到 OpenGL ES 2.0 规范的规则说，什么样的组合可以正常工作是由具体的实现决定的，考虑到 WebGL 规范只列出了 3 种必须正常工作的组合，而这 3 种组合都不包含深度纹理，只有深度渲染缓冲，这意味着并不保证使用深度纹理总是可以正常工作，至少根据规范是这样的。
+</p>
+<p>
+实际上，似乎大多数驱动本身可以在只附加深度纹理的情况下正常工作。不幸的是，至少在 2020 年二月之前，Safari 不允许这种组合可以正常工作。它要求必须还要有一个 color attachment，很有可能需要一个 <code class="notranslate" translate="no">RGBA</code>/<code class="notranslate" translate="no">UNSIGNED_BYTE</code> color attachment。实际上，没有 color attachment 会失败也是符合上面的 WebGL 规范的。
+</p>
+<p>
+总而言之，我们需要未使用的颜色纹理才能在 Safari 中正常工作。遗憾的是，这样也仍然不能保证这种组合可以在所有的驱动/gpus/浏览器中正常工作。幸运的是，这种组合看起来在任何地方都能够正常工作。同样幸运的是，<a href="https://webgl2fundamentals.org">WebGL2</a> 所基于的 OpenGL ES 3.0 修改了规范，要求更多的组合也能正常工作。不幸的是，截止 2020 年二月，<a href="https://webgl2fundamentals.org/webgl/lessons/webgl-getting-webgl2.html">Safari 还不支持 WebGL2</a>。所以，在 WebGL1 中，我们需要添加未使用的颜色纹理，然后祈祷它可以正常工作。😭
+</p>
+</div>
+    </div>
+    <div class="lesson-sidebar">
+        <select class="language">
+    <option value="/webgl/lessons/webgl-shadows.html" >English</a>
+    <option value="/webgl/lessons/fr/webgl-shadows.html" >Français</a>
+    <option value="/webgl/lessons/ja/webgl-shadows.html" >日本語</a>
+    <option value="/webgl/lessons/ko/webgl-shadows.html" >한국어</a>
+    <option value="/webgl/lessons/pl/webgl-shadows.html" >Polski</a>
+    <option value="/webgl/lessons/pt-br/webgl-shadows.html" >Portuguese</a>
+    <option value="/webgl/lessons/ru/webgl-shadows.html" >Русский</a>
+    <option value="/webgl/lessons/zh_cn/webgl-shadows.html" selected>简体中文</a>
+</select>
+
+
+        <div id="toc">
+          <ul>  <li>基础概念</li>
+        <ul>
+          <li><a href="/webgl/lessons/zh_cn/webgl-fundamentals.html">WebGL 基础概念</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-how-it-works.html">WebGL 工作原理</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-shaders-and-glsl.html">WebGL 着色器和GLSL</a></li>
+<li><a href="/webgl/lessons/resources/webgl-state-diagram.html">WebGL State Diagram</a></li>
+        </ul>
+  <li>图像处理</li>
+        <ul>
+          <li><a href="/webgl/lessons/zh_cn/webgl-image-processing.html">WebGL 图像处理</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-image-processing-continued.html">WebGL 进一步处理图像</a></li>
+        </ul>
+  <li>二维平移，旋转，缩放和矩阵运算</li>
+        <ul>
+          <li><a href="/webgl/lessons/zh_cn/webgl-2d-translation.html">WebGL 二维平移</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-2d-rotation.html">WebGL 二维旋转</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-2d-scale.html">WebGL 二维缩放</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-2d-matrices.html">WebGL 二维矩阵</a></li>
+        </ul>
+  <li>三维</li>
+        <ul>
+          <li><a href="/webgl/lessons/zh_cn/webgl-3d-orthographic.html">WebGL 三维正射投影</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-3d-perspective.html">WebGL 三维透视投影</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-3d-camera.html">WebGL 三维相机</a></li>
+        </ul>
+  <li>光照</li>
+        <ul>
+          <li><a href="/webgl/lessons/zh_cn/webgl-3d-lighting-directional.html">WebGL 三维方向光源</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-3d-lighting-point.html">WebGL 三维点光源</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-3d-lighting-spot.html">WebGL 三维聚光灯</a></li>
+        </ul>
+  <li>组织和重构</li>
+        <ul>
+          <li><a href="/webgl/lessons/zh_cn/webgl-less-code-more-fun.html">WebGL 码少趣多</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-drawing-multiple-things.html">WebGL 绘制多个物体</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-scene-graph.html">WebGL 场景图</a></li>
+        </ul>
+  <li>几何</li>
+        <ul>
+          <li><a href="/webgl/lessons/zh_cn/webgl-3d-geometry-lathe.html">WebGL 三维几何加工</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-load-obj.html">WebGL 加载 .obj 文件</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-load-obj-w-mtl.html">WebGL 加载带 .mtl 的 .obj 文件</a></li>
+        </ul>
+  <li>纹理</li>
+        <ul>
+          <li><a href="/webgl/lessons/zh_cn/webgl-3d-textures.html">WebGL 三维纹理</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-data-textures.html">WebGL 数据纹理</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-2-textures.html">WebGL 使用多个纹理</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-cors-permission.html">WebGL 跨域图像</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-3d-perspective-correct-texturemapping.html">WebGL 纹理映射的透视纠正</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-planar-projection-mapping.html">平面的和透视的投影映射</a></li>
+        </ul>
+  <li>渲染到纹理</li>
+        <ul>
+          <li><a href="/webgl/lessons/zh_cn/webgl-render-to-texture.html">WebGL 渲染到纹理</a></li>
+        </ul>
+  <li>阴影</li>
+        <ul>
+          <li><a href="/webgl/lessons/zh_cn/webgl-shadows.html">阴影</a></li>
+        </ul>
+  <li>技术</li>
+        <ul>
+            <li>二维</li>
+        <ul>
+          <li><a href="/webgl/lessons/zh_cn/webgl-2d-drawimage.html">WebGL 二维DrawImage</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-2d-matrix-stack.html">WebGL 二维矩阵栈</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-sprites.html">精灵</a></li>
+        </ul>
+  <li>三维</li>
+        <ul>
+          <li><a href="/webgl/lessons/zh_cn/webgl-cube-maps.html">WebGL 立方体贴图</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-environment-maps.html">WebGL 环境贴图</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-skybox.html">WebGL 天空盒</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-skinning.html">WebGL 蒙皮</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-fog.html">WebGL 雾</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-picking.html">抓取 (点击的东西)</a></li>
+        </ul>
+  <li>文字</li>
+        <ul>
+          <li><a href="/webgl/lessons/zh_cn/webgl-text-html.html">WebGL 文字 - HTML</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-text-canvas2d.html">WebGL 文字 - 二维Canvas</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-text-texture.html">WebGL 文字 - 使用纹理</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-text-glyphs.html">WebGL 文字 - 使用字形纹理</a></li>
+        </ul>
+  <li>纹理</li>
+        <ul>
+          <li><a href="/webgl/lessons/zh_cn/webgl-ramp-textures.html">Ramp Textures (Toon Shading)</a></li>
+        </ul>
+  <li>GPGPU</li>
+        <ul>
+          <li><a href="/webgl/lessons/zh_cn/webgl-gpgpu.html">GPGPU</a></li>
+        </ul>
+        </ul>
+  <li>建议</li>
+        <ul>
+          <li><a href="/webgl/lessons/zh_cn/webgl-smallest-programs.html">WebGL 最小的程序</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-drawing-without-data.html">无数据绘图</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-shadertoy.html">Shadertoy</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-pulling-vertices.html">Pulling Vertices</a></li>
+        </ul>
+  <li>优化</li>
+        <ul>
+          <li><a href="/webgl/lessons/zh_cn/webgl-indexed-vertices.html">顶点索引 （gl.drawElements)</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-instanced-drawing.html">实例化绘制</a></li>
+        </ul>
+  <li>杂项</li>
+        <ul>
+          <li><a href="/webgl/lessons/zh_cn/webgl-setup-and-installation.html">WebGL 设置和安装</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-boilerplate.html">WebGL 样板</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-resizing-the-canvas.html">WebGL 重置画布尺寸</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-animation.html">WebGL 动画</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-points-lines-triangles.html">WebGL 点、线和三角</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-multiple-views.html">Multiple Views, Multiple Canvases</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-visualizing-the-camera.html">可视化相机</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-and-alpha.html">WebGL 和阿尔法通道</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-2d-vs-3d-library.html">WebGL 2D vs 3D 库</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-anti-patterns.html">WebGL 错误模式</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-matrix-vs-math.html">WebGL 矩阵 vs 数学中的矩阵</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-precision-issues.html">Precision Issues</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-tips.html#screenshot">截屏</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-tips.html#preservedrawingbuffer">防止画布被清空</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-tips.html#tabindex">在画布中获取键盘输入</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-tips.html#html-background">将 WebGL 作为 HTML 的背景</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-cross-platform-issues.html">WebGL 跨平台相关问题</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-qna.html">Questions and Answers</a></li>
+        </ul>
+  <li>参考</li>
+        <ul>
+          <li><a href="/webgl/lessons/zh_cn/webgl-attributes.html">WebGL 属性</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-texture-units.html">WebGL 纹理单元</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-framebuffers.html">WebGL 帧缓冲</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-readpixels.html">WebGL readPixels</a></li>
+<li><a href="/webgl/lessons/zh_cn/webgl-references.html">WebGL 参考</a></li>
+        </ul></ul>
+<ul>
+  <li><a href="/docs/">API 帮助文档</a></li>
+  <li><a href="https://twgljs.org">TWGL, 一个轻量级WebGL辅助库</a></li>
+  <li><a href="https://github.com/gfxfundamentals/webgl-fundamentals">GitHub</a></li>
+</ul>
+        </div>
+    </div>
+    <div class="lesson-comments">
+        
+    <div>有疑问? <a href="https://stackoverflow.com/questions/tagged/webgl">在stackoverflow上提问</a>.</div>
+    <div>Issue/Bug? <a href="https://github.com/gfxfundamentals/webgl-fundamentals/issues">在GitHub上提issue</a>.</div>
+    <div class="lesson-comment-notes">
+       使用 <b>&lt;pre&gt;&lt;code&gt;</b> 代码 <b>&lt;/code&gt;&lt;/pre&gt;</b> 的格式编写代码块
+    </div>
+  
+
+        <div id="disqus_thread"></div>
+        <script>
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'webglfundamentals'; // required: replace example with your forum shortname
+            var disqus_identifier = 'WebGL 阴影';
+            var disqus_title = 'WebGL 阴影';
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                if (window.location.hostname.indexOf("webglfundamentals.org") < 0) {
+                    return;
+                }
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+  </div>
+</div>
+</body>
+<script>
+const settings = {
+  contribTemplate: "感谢 <a href=\"${html_url}\"><img src=\"${avatar_url}\"> ${login}</a><br>的 <a href=\"https://github.com/${owner}/${repo}/commits?author=${login}\">${contributions} 次贡献</a>",
+  owner: "gfxfundamentals",
+  repo: "webgl-fundamentals",
+};
+</script>
+<script src="/contributors.js"></script>
+<script src="/3rdparty/jquery-1.11.2.min.js"></script>
+<script src="/webgl/lessons/resources/prettify.js"></script>
+<script src="/webgl/lessons/resources/lesson.js" type="module"></script>
+<script>
+(function() {
+  if (window.location.hostname.indexOf("webglfundamentals.org") < 0) {
+      return;
+  }
+
+  function addScript(src, type, fn) {
+    const script = document.createElement('script');
+    const firstScript = document.getElementsByTagName('script')[0];
+    script.async = true;
+    script.defer = true;
+    script.type = type || 'javascript';
+    if (fn) {
+      script.addEventListener('load', fn);
+    }
+    script.src = src;
+    firstScript.parentNode.insertBefore(script, firstScript);
+  }
+
+  // can't do this because it would eat contexts
+  //addScript('//gpustats.org/stats.js', 'module');
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-59804936-1', 'auto');
+  ga('send', 'pageview');
+}());
+</script>
+
+
+</html>
+
+
+

@@ -42,12 +42,16 @@ canvas {
 #ui>div {
   pointer-events: none;
 }
-#ui input, #ui select, #ui option, #ui canvas {
+#ui input,
+#ui label,
+#ui select,
+#ui option,
+#ui canvas {
   pointer-events: auto;
 }
 
 .gman-slider-label, .gman-widget-label, .gman-checkbox-label {
-  font-size: small;
+  font-size: medium;
   min-width: 10em;
   text-align: right;
 }
@@ -56,7 +60,7 @@ canvas {
 }
 .gman-widget-value {
   float: right;
-  font-size: small;
+  font-size: medium;
   order: 1;
   min-width: 3em;
 }
@@ -93,7 +97,6 @@ body.iframe {
   width: 100vw;
   height: 100vh;
   margin: 0;
-  overflow: hidden;
 }
 
 .iframe>.description {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012, Gregg Tavares.
+ * Copyright 2021, GFXFundamentals.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -12,7 +12,7 @@
  * copyright notice, this list of conditions and the following disclaimer
  * in the documentation and/or other materials provided with the
  * distribution.
- *     * Neither the name of Gregg Tavares. nor the names of his
+ *     * Neither the name of GFXFundamentals. nor the names of his
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
  *
@@ -65,7 +65,9 @@
         // eslint-disable-line
       }
       try {
-        document.body.className = 'iframe';
+        if (document.body) {
+          document.body.className = 'iframe';
+        }
       } catch (e) {
         // eslint-disable-line
       }
@@ -334,7 +336,7 @@
         super(url);
         let listener;
         this.onmessage = function(e) {
-          if (!e || !e.data || !e.data.type === '___editor___') {
+          if (!e || !e.data || e.data.type !== '___editor___') {
             if (listener) {
               listener(e);
             }
@@ -414,82 +416,6 @@
     }
   };
 
-  // Replace requestAnimationFrame and cancelAnimationFrame with one
-  // that only executes when the body is visible (we're in an iframe).
-  // It's frustrating that th browsers don't do this automatically.
-  // It's half of the point of rAF that it shouldn't execute when
-  // content is not visible but browsers execute rAF in iframes even
-  // if they are not visible.
-  if (topWindow.requestAnimationFrame) {
-    topWindow.requestAnimationFrame = (function(oldRAF, oldCancelRAF) {
-      let nextFakeRAFId = 1;
-      const fakeRAFIdToCallbackMap = new Map();
-      let rafRequestId;
-      let isBodyOnScreen;
-
-      function rAFHandler(time) {
-        rafRequestId = undefined;
-        const ids = [...fakeRAFIdToCallbackMap.keys()];  // WTF! Map.keys() iterates over live keys!
-        for (const id of ids) {
-          const callback = fakeRAFIdToCallbackMap.get(id);
-          fakeRAFIdToCallbackMap.delete(id);
-          if (callback) {
-            callback(time);
-          }
-        }
-      }
-
-      function startRAFIfIntersectingAndNeeded() {
-        if (!rafRequestId && isBodyOnScreen && fakeRAFIdToCallbackMap.size > 0) {
-          rafRequestId = oldRAF(rAFHandler);
-        }
-      }
-
-      function stopRAF() {
-        if (rafRequestId) {
-          oldCancelRAF(rafRequestId);
-          rafRequestId = undefined;
-        }
-      }
-
-      function initIntersectionObserver() {
-        const intersectionObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            isBodyOnScreen = entry.isIntersecting;
-          });
-          if (isBodyOnScreen) {
-            startRAFIfIntersectingAndNeeded();
-          } else {
-            stopRAF();
-          }
-        });
-        intersectionObserver.observe(document.body);
-      }
-
-      function betterRAF(callback) {
-        const fakeRAFId = nextFakeRAFId++;
-        fakeRAFIdToCallbackMap.set(fakeRAFId, callback);
-        startRAFIfIntersectingAndNeeded();
-        return fakeRAFId;
-      }
-
-      function betterCancelRAF(id) {
-        fakeRAFIdToCallbackMap.delete(id);
-      }
-
-      topWindow.cancelAnimationFrame = betterCancelRAF;
-
-      return function(callback) {
-        // we need to lazy init this because this code gets parsed
-        // before body exists. We could fix it by moving lesson-helper.js
-        // after <body> but that would require changing 100s of examples
-        initIntersectionObserver();
-        topWindow.requestAnimationFrame = betterRAF;
-        return betterRAF(callback);
-      };
-
-    }(topWindow.requestAnimationFrame, topWindow.cancelAnimationFrame));
-  }
 
   updateCSSIfInIFrame();
 
