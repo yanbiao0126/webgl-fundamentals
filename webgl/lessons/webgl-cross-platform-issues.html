@@ -104,6 +104,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <link rel="alternate" hreflang="pl" href="https://webglfundamentals.org/webgl/lessons/pl/webgl-cross-platform-issues.html">
   <link rel="alternate" hreflang="pt-br" href="https://webglfundamentals.org/webgl/lessons/pt-br/webgl-cross-platform-issues.html">
   <link rel="alternate" hreflang="ru" href="https://webglfundamentals.org/webgl/lessons/ru/webgl-cross-platform-issues.html">
+  <link rel="alternate" hreflang="uk" href="https://webglfundamentals.org/webgl/lessons/uk/webgl-cross-platform-issues.html">
   <link rel="alternate" hreflang="zh_cn" href="https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-cross-platform-issues.html">
 
 
@@ -121,6 +122,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <option value="/webgl/lessons/pl/webgl-cross-platform-issues.html" >Polski</a>
     <option value="/webgl/lessons/pt-br/webgl-cross-platform-issues.html" >Portuguese</a>
     <option value="/webgl/lessons/ru/webgl-cross-platform-issues.html" >Русский</a>
+    <option value="/webgl/lessons/uk/webgl-cross-platform-issues.html" >Українська</a>
     <option value="/webgl/lessons/zh_cn/webgl-cross-platform-issues.html" >简体中文</a>
 </select>
 
@@ -258,7 +260,7 @@ I started programming on machines with 16k to 64k of memory 😜)</p>
 <ul>
 <li><p>The max texture size allowed</p>
 <p>2048 or 4096 seems to be reasonable limits. At least as of 2020 it looks like
-<a href="https://webglstats.com/webgl/parameter/MAX_TEXTURE_SIZE">99% of devices support 4096 but only 50% support &gt; 4096</a>.</p>
+<a href="https://web3dsurvey.com/webgl/parameters/MAX_TEXTURE_SIZE">99% of devices support 4096 but only 50% support &gt; 4096</a>.</p>
 <p>Note: the max texture size is the maximum dimension the GPU can process. It
 doesn&#39;t mean that GPU has enough memory for that dimension squared (for a 2D
 texture) or cubed (for a 3D texture). For example some GPUs have a max size of
@@ -333,7 +335,7 @@ that all drivers pass. Just be aware if you&#39;re getting close the limit.</p>
 </table>
 
 <p>It&#39;s important to note the <strong>0</strong> for a vertex shader in WebGL1. Note that that&#39;s probably not the end of the world.
-Apparently <a href="https://webglstats.com/webgl/parameter/MAX_VERTEX_TEXTURE_IMAGE_UNITS">~97% of all devices support at least 4</a>.
+Apparently <a href="https://web3dsurvey.com/webgl/parameters/MAX_VERTEX_TEXTURE_IMAGE_UNITS">~97% of all devices support at least 4</a>.
 Still, you might want to check so you can either tell the user that your app is not going to work for them or
 you can fallback to some other shaders.</p>
 </li>
@@ -489,6 +491,7 @@ to and you&#39;re drawing LINES or POINTS.</p>
     <option value="/webgl/lessons/pl/webgl-cross-platform-issues.html" >Polski</a>
     <option value="/webgl/lessons/pt-br/webgl-cross-platform-issues.html" >Portuguese</a>
     <option value="/webgl/lessons/ru/webgl-cross-platform-issues.html" >Русский</a>
+    <option value="/webgl/lessons/uk/webgl-cross-platform-issues.html" >Українська</a>
     <option value="/webgl/lessons/zh_cn/webgl-cross-platform-issues.html" >简体中文</a>
 </select>
 
@@ -637,11 +640,11 @@ to and you&#39;re drawing LINES or POINTS.</p>
     </div>
     <div class="lesson-comments">
         
-    <div>Questions? <a href="https://stackoverflow.com/questions/tagged/webgl">Ask on stackoverflow</a>.</div>
-    <div>Issue/Bug? <a href="https://github.com/gfxfundamentals/webgl-fundamentals/issues">Create an issue on github</a>.</div>
-    <div class="lesson-comment-notes">
-       Use <b>&lt;pre&gt;&lt;code&gt;</b>code goes here<b>&lt;/code&gt;&lt;/pre&gt;</b> for code blocks
-    </div>
+<div>Questions? <a href="https://stackoverflow.com/questions/tagged/webgl">Ask on stackoverflow</a>.</div>
+<div>Issue/Bug? <a href="https://github.com/gfxfundamentals/webgl-fundamentals/issues">Create an issue on github</a>.</div>
+<div class="lesson-comment-notes">
+   Use <b>&lt;pre&gt;&lt;code&gt;</b>code goes here<b>&lt;/code&gt;&lt;/pre&gt;</b> for code blocks
+</div>
   
 
         <div id="disqus_thread"></div>
@@ -679,35 +682,6 @@ const settings = {
 <script src="/webgl/lessons/resources/prettify.js"></script>
 <script src="/webgl/lessons/resources/lesson.js" type="module"></script>
 <script>
-(function() {
-  if (window.location.hostname.indexOf("webglfundamentals.org") < 0) {
-      return;
-  }
-
-  function addScript(src, type, fn) {
-    const script = document.createElement('script');
-    const firstScript = document.getElementsByTagName('script')[0];
-    script.async = true;
-    script.defer = true;
-    script.type = type || 'javascript';
-    if (fn) {
-      script.addEventListener('load', fn);
-    }
-    script.src = src;
-    firstScript.parentNode.insertBefore(script, firstScript);
-  }
-
-  // can't do this because it would eat contexts
-  //addScript('//gpustats.org/stats.js', 'module');
-
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-59804936-1', 'auto');
-  ga('send', 'pageview');
-}());
 </script>
 
 

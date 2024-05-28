@@ -65,6 +65,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <option value="/webgl/lessons/pl/webgl-qna-how-to-detect-clipped-triangles-in-the-framgment-shader.html" >Polski</a>
     <option value="/webgl/lessons/pt-br/webgl-qna-how-to-detect-clipped-triangles-in-the-framgment-shader.html" >Portuguese</a>
     <option value="/webgl/lessons/ru/webgl-qna-how-to-detect-clipped-triangles-in-the-framgment-shader.html" >Русский</a>
+    <option value="/webgl/lessons/uk/webgl-qna-how-to-detect-clipped-triangles-in-the-framgment-shader.html" >Українська</a>
     <option value="/webgl/lessons/zh_cn/webgl-qna-how-to-detect-clipped-triangles-in-the-framgment-shader.html" selected>简体中文</a>
 </select>
 
@@ -183,12 +184,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   </div>
   <div class="lesson">
     <div class="lesson-main">
-      <pre class="prettyprint notranslate" translate="no"><code class="notranslate" translate="no">本课程还没有简体中文版翻译哦  (~￣△￣)~
+      <p>本课程还没有简体中文版翻译哦  (~￣△￣)~</p>
+<p><a href="https://github.com/gfxfundamentals/webgl-fundamentals">欢迎参加翻译</a>! 😄
+<a href="/webgl/lessons/webgl-qna-how-to-detect-clipped-triangles-in-the-framgment-shader.html">英文原版地址</a></p>
 
-
-[欢迎参加翻译](https://github.com/gfxfundamentals/webgl-fundamentals)! 😄
-[英文原版地址](/webgl/lessons/webgl-qna-how-to-detect-clipped-triangles-in-the-framgment-shader.html)
-</code></pre>
     </div>
     <div class="lesson-sidebar">
         <select class="language">
@@ -199,6 +198,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <option value="/webgl/lessons/pl/webgl-qna-how-to-detect-clipped-triangles-in-the-framgment-shader.html" >Polski</a>
     <option value="/webgl/lessons/pt-br/webgl-qna-how-to-detect-clipped-triangles-in-the-framgment-shader.html" >Portuguese</a>
     <option value="/webgl/lessons/ru/webgl-qna-how-to-detect-clipped-triangles-in-the-framgment-shader.html" >Русский</a>
+    <option value="/webgl/lessons/uk/webgl-qna-how-to-detect-clipped-triangles-in-the-framgment-shader.html" >Українська</a>
     <option value="/webgl/lessons/zh_cn/webgl-qna-how-to-detect-clipped-triangles-in-the-framgment-shader.html" selected>简体中文</a>
 </select>
 
@@ -350,35 +350,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 <script src="/webgl/lessons/resources/prettify.js"></script>
 <script src="/webgl/lessons/resources/lesson.js"></script>
 <script>
-(function() {
-  if (window.location.hostname.indexOf("webglfundamentals.org") < 0) {
-      return;
-  }
-
-  function addScript(src, type, fn) {
-    const script = document.createElement('script');
-    const firstScript = document.getElementsByTagName('script')[0];
-    script.async = true;
-    script.defer = true;
-    script.type = type || 'javascript';
-    if (fn) {
-      script.addEventListener('load', fn);
-    }
-    script.src = src;
-    firstScript.parentNode.insertBefore(script, firstScript);
-  }
-
-  // can't do this because it would eat contexts
-  //addScript('//gpustats.org/stats.js', 'module');
-
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-59804936-1', 'auto');
-  ga('send', 'pageview');
-}());
 </script>
 
 

@@ -105,6 +105,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <link rel="alternate" hreflang="pl" href="https://webglfundamentals.org/webgl/lessons/pl/webgl-cors-permission.html">
   <link rel="alternate" hreflang="pt-br" href="https://webglfundamentals.org/webgl/lessons/pt-br/webgl-cors-permission.html">
   <link rel="alternate" hreflang="ru" href="https://webglfundamentals.org/webgl/lessons/ru/webgl-cors-permission.html">
+  <link rel="alternate" hreflang="uk" href="https://webglfundamentals.org/webgl/lessons/uk/webgl-cors-permission.html">
   <link rel="alternate" hreflang="zh_cn" href="https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-cors-permission.html">
 
 
@@ -122,6 +123,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <option value="/webgl/lessons/pl/webgl-cors-permission.html" >Polski</a>
     <option value="/webgl/lessons/pt-br/webgl-cors-permission.html" >Portuguese</a>
     <option value="/webgl/lessons/ru/webgl-cors-permission.html" >Русский</a>
+    <option value="/webgl/lessons/uk/webgl-cors-permission.html" >Українська</a>
     <option value="/webgl/lessons/zh_cn/webgl-cors-permission.html" >简体中文</a>
 </select>
 
@@ -362,6 +364,7 @@ Github page, flickr.com, imgur.com 등은 권한을 부여하지만, 대부분�
     <option value="/webgl/lessons/pl/webgl-cors-permission.html" >Polski</a>
     <option value="/webgl/lessons/pt-br/webgl-cors-permission.html" >Portuguese</a>
     <option value="/webgl/lessons/ru/webgl-cors-permission.html" >Русский</a>
+    <option value="/webgl/lessons/uk/webgl-cors-permission.html" >Українська</a>
     <option value="/webgl/lessons/zh_cn/webgl-cors-permission.html" >简体中文</a>
 </select>
 
@@ -406,9 +409,9 @@ Github page, flickr.com, imgur.com 등은 권한을 부여하지만, 대부분�
         </ul>
   <li>지오메트리</li>
         <ul>
-          <li><a href="/webgl/lessons/ko/webgl-3d-geometry-lathe.html">지오메트리 - 선반 가공</a></li>
-<li><a href="/webgl/lessons/ko/webgl-load-obj.html">.obj 파일 로딩</a></li>
-<li><a href="/webgl/lessons/ko/webgl-load-obj-w-mtl.html">.mtl 파일로 .obj 로딩</a></li>
+          <li><a href="/webgl/lessons/ko/webgl-3d-geometry-lathe.html">지오메트리 - Lathe</a></li>
+<li><a href="/webgl/lessons/ko/webgl-load-obj.html">.obj 파일 로드</a></li>
+<li><a href="/webgl/lessons/ko/webgl-load-obj-w-mtl.html">.mtl 파일이 있는 .obj 로드</a></li>
         </ul>
   <li>텍스처</li>
         <ul>
@@ -470,7 +473,7 @@ Github page, flickr.com, imgur.com 등은 권한을 부여하지만, 대부분�
   <li>최적화</li>
         <ul>
           <li><a href="/webgl/lessons/ko/webgl-indexed-vertices.html">색인된 정점 (gl.drawElements)</a></li>
-<li><a href="/webgl/lessons/ko/webgl-instanced-drawing.html">색인된 그리기</a></li>
+<li><a href="/webgl/lessons/ko/webgl-instanced-drawing.html">인스턴스 드로잉</a></li>
         </ul>
   <li>Misc</li>
         <ul>
@@ -511,10 +514,10 @@ Github page, flickr.com, imgur.com 등은 권한을 부여하지만, 대부분�
     </div>
     <div class="lesson-comments">
         
-    <div>이슈/버그는? <a href="https://github.com/gfxfundamentals/webgl-fundamentals/issues">Github</a>에 이슈를 만들어주세요.</div>
-    <div class="lesson-comment-notes">
-      코드 블록은 <b>&lt;pre&gt;&lt;code&gt;</b>여기에 코드 입력<b>&lt;/code&gt;&lt;/pre&gt;</b>를 사용해주세요
-    </div>
+<div>이슈/버그는? <a href="https://github.com/gfxfundamentals/webgl-fundamentals/issues">Github</a>에 이슈를 만들어주세요.</div>
+<div class="lesson-comment-notes">
+  코드 블록은 <b>&lt;pre&gt;&lt;code&gt;</b>여기에 코드 입력<b>&lt;/code&gt;&lt;/pre&gt;</b>를 사용해주세요
+</div>
   
 
         <div id="disqus_thread"></div>
@@ -552,35 +555,6 @@ const settings = {
 <script src="/webgl/lessons/resources/prettify.js"></script>
 <script src="/webgl/lessons/resources/lesson.js" type="module"></script>
 <script>
-(function() {
-  if (window.location.hostname.indexOf("webglfundamentals.org") < 0) {
-      return;
-  }
-
-  function addScript(src, type, fn) {
-    const script = document.createElement('script');
-    const firstScript = document.getElementsByTagName('script')[0];
-    script.async = true;
-    script.defer = true;
-    script.type = type || 'javascript';
-    if (fn) {
-      script.addEventListener('load', fn);
-    }
-    script.src = src;
-    firstScript.parentNode.insertBefore(script, firstScript);
-  }
-
-  // can't do this because it would eat contexts
-  //addScript('//gpustats.org/stats.js', 'module');
-
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-59804936-1', 'auto');
-  ga('send', 'pageview');
-}());
 </script>
 
 

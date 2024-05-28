@@ -105,6 +105,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <link rel="alternate" hreflang="pl" href="https://webglfundamentals.org/webgl/lessons/pl/webgl-3d-lighting-point.html">
   <link rel="alternate" hreflang="pt-br" href="https://webglfundamentals.org/webgl/lessons/pt-br/webgl-3d-lighting-point.html">
   <link rel="alternate" hreflang="ru" href="https://webglfundamentals.org/webgl/lessons/ru/webgl-3d-lighting-point.html">
+  <link rel="alternate" hreflang="uk" href="https://webglfundamentals.org/webgl/lessons/uk/webgl-3d-lighting-point.html">
   <link rel="alternate" hreflang="zh_cn" href="https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-3d-lighting-point.html">
 
 
@@ -122,6 +123,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <option value="/webgl/lessons/pl/webgl-3d-lighting-point.html" >Polski</a>
     <option value="/webgl/lessons/pt-br/webgl-3d-lighting-point.html" >Portuguese</a>
     <option value="/webgl/lessons/ru/webgl-3d-lighting-point.html" >Русский</a>
+    <option value="/webgl/lessons/uk/webgl-3d-lighting-point.html" >Українська</a>
     <option value="/webgl/lessons/zh_cn/webgl-3d-lighting-point.html" >简体中文</a>
 </select>
 
@@ -293,7 +295,7 @@ void main() {
 +  v_surfaceToLight = u_lightWorldPosition - surfaceWorldPosition;
 }
 </code></pre><p>표면 -&gt; 빛 벡터는 단위 벡터가 아니기 때문에 프래그먼트 셰이더에서 정규화해야 합니다.
-참고로 정점 셰이더에서 정규화할 수 있었지만 베링이기 때문에 위치 사이를 선형적으로 보간하여 완전한 단위 벡터가 아니게 됩니다.</p>
+참고로 정점 셰이더에서 정규화할 수 있었지만 varying이기 때문에 위치 사이를 선형적으로 보간하여 완전한 단위 벡터가 아니게 됩니다.</p>
 <pre class="prettyprint notranslate" translate="no"><code class="notranslate" translate="no">precision mediump float;
 
 // 정점 셰이더에서 전달됩니다.
@@ -304,7 +306,7 @@ varying vec3 v_normal;
 uniform vec4 u_color;
 
 void main() {
-  // v_normal은 베링이기 때문에 보간되므로 단위 벡터가 아닙니다.
+  // v_normal은 varying이기 때문에 보간되므로 단위 벡터가 아닙니다.
   // 정규화하면 다시 단위 벡터가 됩니다.
   vec3 normal = normalize(v_normal);
 
@@ -315,7 +317,7 @@ void main() {
 
   gl_FragColor = u_color;
 
-  // 색상 부분(알파 제외)에만 광량 곱하기
+  // 색상 부분(알파 제외)에만 light 곱하기
   gl_FragColor.rgb *= light;
 }
 </code></pre><p>그런 다음 <code class="notranslate" translate="no">u_world</code>와 <code class="notranslate" translate="no">u_lightWorldPosition</code>의 위치를 찾아야 합니다.</p>
@@ -355,7 +357,7 @@ void main() {
 <p>현실의 물체를 보면 먼 곳에서 조명이 비칠 때 거울처럼 빛을 반사하는데요.</p>
 <p><img class="webgl_center" src="../resources/specular-highlights.jpg" /></p>
 <p>해당 효과는 빛이 눈에 반사되는지 계산하여 시뮬레이션할 수 있습니다.
-다시 <em>스칼라곱</em>을 구하게 되는데요.</p>
+이를 위해 다시 <em>스칼라곱</em>을 구해야 하는데요.</p>
 <p>무엇을 확인해야 할까요?
 생각해봅시다.
 빛은 표면에 부딪히는 각도와 동일한 각도로 반사되는데, 표면 -&gt; 빛 방향이 표면 -&gt; 눈 방향과 정확히 반전이라면 완벽한 반사각입니다.</p>
@@ -364,7 +366,7 @@ void main() {
 </div>
 
 </p>
-<p>모델의 표면에서 조명을 향하는 방향을 알고, 표면에서 뷰/눈/카메라로 향하는 방향을 안다면, 이 두 벡터를 더하고 정규화해서, 이들 사이 중간에 있는 <code class="notranslate" translate="no">halfVector</code>를 계산할 수 있습니다.
+<p>모델의 표면에서 조명으로 향하는 방향을 알고, 표면에서 뷰/눈/카메라로 향하는 방향을 안다면, 이 두 벡터를 더하고 정규화해서, 이들 사이 중간에 있는 <code class="notranslate" translate="no">halfVector</code>를 계산할 수 있습니다.
 <code class="notranslate" translate="no">halfVector</code>와 표면 법선이 일치한다면 빛을 뷰/눈/카메라로 반사하기에 완벽한 각도입니다.
 그럼 어떻게 일치하는지 알 수 있을까요?
 이전에 했던 것처럼 <em>스칼라곱</em>을 구하면 됩니다.
@@ -416,7 +418,7 @@ varying vec3 v_surfaceToLight;
 uniform vec4 u_color;
 
 void main() {
-  // v_normal이 베링이기 때문에 보간되므로 단위 벡터가 아닙니다.
+  // v_normal이 varying이기 때문에 보간되므로 단위 벡터가 아닙니다.
   // 정규화하면 다시 단위 벡터가 됩니다.
   vec3 normal = normalize(v_normal);
 
@@ -429,7 +431,7 @@ void main() {
 
   gl_FragColor = u_color;
 
-  // 색상 부분(알파 제외)에만 광량 곱하기
+  // 색상 부분(알파 제외)에만 light 곱하기
   gl_FragColor.rgb *= light;
 
 +  // 반사율 더하기
@@ -487,7 +489,7 @@ var cameraMatrix = makeLookAt(camera, target, up);
 
 ...
 
-// 광택 설정
+// 광택도 설정
 gl.uniform1f(shininessLocation, shininess);
 </code></pre><p>그리고 여기 결과입니다.</p>
 <p><div class="webgl_example_container">
@@ -506,7 +508,7 @@ uniform float u_shininess;
 
 ...
 
-  // 색상 부분(알파 제외)에만 광량 곱하기
+  // 색상 부분(알파 제외)에만 light 곱하기
 *  gl_FragColor.rgb *= light * u_lightColor;
 
   // 반사율 더하기
@@ -570,6 +572,7 @@ uniform float u_shininess;
     <option value="/webgl/lessons/pl/webgl-3d-lighting-point.html" >Polski</a>
     <option value="/webgl/lessons/pt-br/webgl-3d-lighting-point.html" >Portuguese</a>
     <option value="/webgl/lessons/ru/webgl-3d-lighting-point.html" >Русский</a>
+    <option value="/webgl/lessons/uk/webgl-3d-lighting-point.html" >Українська</a>
     <option value="/webgl/lessons/zh_cn/webgl-3d-lighting-point.html" >简体中文</a>
 </select>
 
@@ -614,9 +617,9 @@ uniform float u_shininess;
         </ul>
   <li>지오메트리</li>
         <ul>
-          <li><a href="/webgl/lessons/ko/webgl-3d-geometry-lathe.html">지오메트리 - 선반 가공</a></li>
-<li><a href="/webgl/lessons/ko/webgl-load-obj.html">.obj 파일 로딩</a></li>
-<li><a href="/webgl/lessons/ko/webgl-load-obj-w-mtl.html">.mtl 파일로 .obj 로딩</a></li>
+          <li><a href="/webgl/lessons/ko/webgl-3d-geometry-lathe.html">지오메트리 - Lathe</a></li>
+<li><a href="/webgl/lessons/ko/webgl-load-obj.html">.obj 파일 로드</a></li>
+<li><a href="/webgl/lessons/ko/webgl-load-obj-w-mtl.html">.mtl 파일이 있는 .obj 로드</a></li>
         </ul>
   <li>텍스처</li>
         <ul>
@@ -678,7 +681,7 @@ uniform float u_shininess;
   <li>최적화</li>
         <ul>
           <li><a href="/webgl/lessons/ko/webgl-indexed-vertices.html">색인된 정점 (gl.drawElements)</a></li>
-<li><a href="/webgl/lessons/ko/webgl-instanced-drawing.html">색인된 그리기</a></li>
+<li><a href="/webgl/lessons/ko/webgl-instanced-drawing.html">인스턴스 드로잉</a></li>
         </ul>
   <li>Misc</li>
         <ul>
@@ -719,10 +722,10 @@ uniform float u_shininess;
     </div>
     <div class="lesson-comments">
         
-    <div>이슈/버그는? <a href="https://github.com/gfxfundamentals/webgl-fundamentals/issues">Github</a>에 이슈를 만들어주세요.</div>
-    <div class="lesson-comment-notes">
-      코드 블록은 <b>&lt;pre&gt;&lt;code&gt;</b>여기에 코드 입력<b>&lt;/code&gt;&lt;/pre&gt;</b>를 사용해주세요
-    </div>
+<div>이슈/버그는? <a href="https://github.com/gfxfundamentals/webgl-fundamentals/issues">Github</a>에 이슈를 만들어주세요.</div>
+<div class="lesson-comment-notes">
+  코드 블록은 <b>&lt;pre&gt;&lt;code&gt;</b>여기에 코드 입력<b>&lt;/code&gt;&lt;/pre&gt;</b>를 사용해주세요
+</div>
   
 
         <div id="disqus_thread"></div>
@@ -760,35 +763,6 @@ const settings = {
 <script src="/webgl/lessons/resources/prettify.js"></script>
 <script src="/webgl/lessons/resources/lesson.js" type="module"></script>
 <script>
-(function() {
-  if (window.location.hostname.indexOf("webglfundamentals.org") < 0) {
-      return;
-  }
-
-  function addScript(src, type, fn) {
-    const script = document.createElement('script');
-    const firstScript = document.getElementsByTagName('script')[0];
-    script.async = true;
-    script.defer = true;
-    script.type = type || 'javascript';
-    if (fn) {
-      script.addEventListener('load', fn);
-    }
-    script.src = src;
-    firstScript.parentNode.insertBefore(script, firstScript);
-  }
-
-  // can't do this because it would eat contexts
-  //addScript('//gpustats.org/stats.js', 'module');
-
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-59804936-1', 'auto');
-  ga('send', 'pageview');
-}());
 </script>
 
 

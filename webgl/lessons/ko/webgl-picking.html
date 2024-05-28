@@ -105,6 +105,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <link rel="alternate" hreflang="pl" href="https://webglfundamentals.org/webgl/lessons/pl/webgl-picking.html">
   <link rel="alternate" hreflang="pt-br" href="https://webglfundamentals.org/webgl/lessons/pt-br/webgl-picking.html">
   <link rel="alternate" hreflang="ru" href="https://webglfundamentals.org/webgl/lessons/ru/webgl-picking.html">
+  <link rel="alternate" hreflang="uk" href="https://webglfundamentals.org/webgl/lessons/uk/webgl-picking.html">
   <link rel="alternate" hreflang="zh_cn" href="https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-picking.html">
 
 
@@ -122,6 +123,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <option value="/webgl/lessons/pl/webgl-picking.html" >Polski</a>
     <option value="/webgl/lessons/pt-br/webgl-picking.html" >Portuguese</a>
     <option value="/webgl/lessons/ru/webgl-picking.html" >Русский</a>
+    <option value="/webgl/lessons/uk/webgl-picking.html" >Українська</a>
     <option value="/webgl/lessons/zh_cn/webgl-picking.html" >简体中文</a>
 </select>
 
@@ -289,7 +291,7 @@ function setFramebufferAttachmentSizes(width, height) {
 const fb = gl.createFramebuffer();
 gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
 
-// 첫 번째 색상 어태치먼트에 텍스처 첨부
+// 첫 번째 색상 attachment에 텍스처 첨부
 const attachmentPoint = gl.COLOR_ATTACHMENT0;
 const level = 0;
 gl.framebufferTexture2D(gl.FRAMEBUFFER, attachmentPoint, gl.TEXTURE_2D, targetTexture, level);
@@ -304,7 +306,7 @@ gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER,
 
 -  webglUtils.resizeCanvasToDisplaySize(gl.canvas);
 +  if (webglUtils.resizeCanvasToDisplaySize(gl.canvas)) {
-+    // 캔버스 크기가 바뀌었으니 프레임 버퍼 어태치먼트와 일치시킵니다.
++    // 캔버스 크기가 바뀌었으니 프레임 버퍼 attachment와 일치시킵니다.
 +    setFramebufferAttachmentSizes(gl.canvas.width, gl.canvas.height);
 +  }
 
@@ -672,7 +674,7 @@ function drawScene(time) {
   ++frameCount;
 
 -  if (webglUtils.resizeCanvasToDisplaySize(gl.canvas)) {
--    // 캔버스 크기가 바뀌었으니 프레임 버퍼 어태치먼트와 일치시킵니다.
+-    // 캔버스 크기가 바뀌었으니 프레임 버퍼 attachment와 일치시킵니다.
 -    setFramebufferAttachmentSizes(gl.canvas.width, gl.canvas.height);
 -  }
 +  webglUtils.resizeCanvasToDisplaySize(gl.canvas);
@@ -813,6 +815,7 @@ drawObjects(objectsToDraw);
     <option value="/webgl/lessons/pl/webgl-picking.html" >Polski</a>
     <option value="/webgl/lessons/pt-br/webgl-picking.html" >Portuguese</a>
     <option value="/webgl/lessons/ru/webgl-picking.html" >Русский</a>
+    <option value="/webgl/lessons/uk/webgl-picking.html" >Українська</a>
     <option value="/webgl/lessons/zh_cn/webgl-picking.html" >简体中文</a>
 </select>
 
@@ -857,9 +860,9 @@ drawObjects(objectsToDraw);
         </ul>
   <li>지오메트리</li>
         <ul>
-          <li><a href="/webgl/lessons/ko/webgl-3d-geometry-lathe.html">지오메트리 - 선반 가공</a></li>
-<li><a href="/webgl/lessons/ko/webgl-load-obj.html">.obj 파일 로딩</a></li>
-<li><a href="/webgl/lessons/ko/webgl-load-obj-w-mtl.html">.mtl 파일로 .obj 로딩</a></li>
+          <li><a href="/webgl/lessons/ko/webgl-3d-geometry-lathe.html">지오메트리 - Lathe</a></li>
+<li><a href="/webgl/lessons/ko/webgl-load-obj.html">.obj 파일 로드</a></li>
+<li><a href="/webgl/lessons/ko/webgl-load-obj-w-mtl.html">.mtl 파일이 있는 .obj 로드</a></li>
         </ul>
   <li>텍스처</li>
         <ul>
@@ -921,7 +924,7 @@ drawObjects(objectsToDraw);
   <li>최적화</li>
         <ul>
           <li><a href="/webgl/lessons/ko/webgl-indexed-vertices.html">색인된 정점 (gl.drawElements)</a></li>
-<li><a href="/webgl/lessons/ko/webgl-instanced-drawing.html">색인된 그리기</a></li>
+<li><a href="/webgl/lessons/ko/webgl-instanced-drawing.html">인스턴스 드로잉</a></li>
         </ul>
   <li>Misc</li>
         <ul>
@@ -962,10 +965,10 @@ drawObjects(objectsToDraw);
     </div>
     <div class="lesson-comments">
         
-    <div>이슈/버그는? <a href="https://github.com/gfxfundamentals/webgl-fundamentals/issues">Github</a>에 이슈를 만들어주세요.</div>
-    <div class="lesson-comment-notes">
-      코드 블록은 <b>&lt;pre&gt;&lt;code&gt;</b>여기에 코드 입력<b>&lt;/code&gt;&lt;/pre&gt;</b>를 사용해주세요
-    </div>
+<div>이슈/버그는? <a href="https://github.com/gfxfundamentals/webgl-fundamentals/issues">Github</a>에 이슈를 만들어주세요.</div>
+<div class="lesson-comment-notes">
+  코드 블록은 <b>&lt;pre&gt;&lt;code&gt;</b>여기에 코드 입력<b>&lt;/code&gt;&lt;/pre&gt;</b>를 사용해주세요
+</div>
   
 
         <div id="disqus_thread"></div>
@@ -1003,35 +1006,6 @@ const settings = {
 <script src="/webgl/lessons/resources/prettify.js"></script>
 <script src="/webgl/lessons/resources/lesson.js" type="module"></script>
 <script>
-(function() {
-  if (window.location.hostname.indexOf("webglfundamentals.org") < 0) {
-      return;
-  }
-
-  function addScript(src, type, fn) {
-    const script = document.createElement('script');
-    const firstScript = document.getElementsByTagName('script')[0];
-    script.async = true;
-    script.defer = true;
-    script.type = type || 'javascript';
-    if (fn) {
-      script.addEventListener('load', fn);
-    }
-    script.src = src;
-    firstScript.parentNode.insertBefore(script, firstScript);
-  }
-
-  // can't do this because it would eat contexts
-  //addScript('//gpustats.org/stats.js', 'module');
-
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-59804936-1', 'auto');
-  ga('send', 'pageview');
-}());
 </script>
 
 

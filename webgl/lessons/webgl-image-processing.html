@@ -104,6 +104,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <link rel="alternate" hreflang="pl" href="https://webglfundamentals.org/webgl/lessons/pl/webgl-image-processing.html">
   <link rel="alternate" hreflang="pt-br" href="https://webglfundamentals.org/webgl/lessons/pt-br/webgl-image-processing.html">
   <link rel="alternate" hreflang="ru" href="https://webglfundamentals.org/webgl/lessons/ru/webgl-image-processing.html">
+  <link rel="alternate" hreflang="uk" href="https://webglfundamentals.org/webgl/lessons/uk/webgl-image-processing.html">
   <link rel="alternate" hreflang="zh_cn" href="https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-image-processing.html">
 
 
@@ -121,6 +122,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <option value="/webgl/lessons/pl/webgl-image-processing.html" >Polski</a>
     <option value="/webgl/lessons/pt-br/webgl-image-processing.html" >Portuguese</a>
     <option value="/webgl/lessons/ru/webgl-image-processing.html" >Русский</a>
+    <option value="/webgl/lessons/uk/webgl-image-processing.html" >Українська</a>
     <option value="/webgl/lessons/zh_cn/webgl-image-processing.html" >简体中文</a>
 </select>
 
@@ -287,7 +289,7 @@ have to re-arrange our code a little to wait for the texture to load. Once
 it loads we&#39;ll draw it.</p>
 <pre class="prettyprint notranslate" translate="no"><code class="notranslate" translate="no">function main() {
   var image = new Image();
-  image.src = &quot;http://someimage/on/our/server&quot;;  // MUST BE SAME DOMAIN!!!
+  image.src = &quot;http://someimage/on/our/server&quot;;
   image.onload = function() {
     render(image);
   }
@@ -532,6 +534,7 @@ See <a href="webgl-how-it-works.html">How it works</a> for more details.
     <option value="/webgl/lessons/pl/webgl-image-processing.html" >Polski</a>
     <option value="/webgl/lessons/pt-br/webgl-image-processing.html" >Portuguese</a>
     <option value="/webgl/lessons/ru/webgl-image-processing.html" >Русский</a>
+    <option value="/webgl/lessons/uk/webgl-image-processing.html" >Українська</a>
     <option value="/webgl/lessons/zh_cn/webgl-image-processing.html" >简体中文</a>
 </select>
 
@@ -680,11 +683,11 @@ See <a href="webgl-how-it-works.html">How it works</a> for more details.
     </div>
     <div class="lesson-comments">
         
-    <div>Questions? <a href="https://stackoverflow.com/questions/tagged/webgl">Ask on stackoverflow</a>.</div>
-    <div>Issue/Bug? <a href="https://github.com/gfxfundamentals/webgl-fundamentals/issues">Create an issue on github</a>.</div>
-    <div class="lesson-comment-notes">
-       Use <b>&lt;pre&gt;&lt;code&gt;</b>code goes here<b>&lt;/code&gt;&lt;/pre&gt;</b> for code blocks
-    </div>
+<div>Questions? <a href="https://stackoverflow.com/questions/tagged/webgl">Ask on stackoverflow</a>.</div>
+<div>Issue/Bug? <a href="https://github.com/gfxfundamentals/webgl-fundamentals/issues">Create an issue on github</a>.</div>
+<div class="lesson-comment-notes">
+   Use <b>&lt;pre&gt;&lt;code&gt;</b>code goes here<b>&lt;/code&gt;&lt;/pre&gt;</b> for code blocks
+</div>
   
 
         <div id="disqus_thread"></div>
@@ -722,35 +725,6 @@ const settings = {
 <script src="/webgl/lessons/resources/prettify.js"></script>
 <script src="/webgl/lessons/resources/lesson.js" type="module"></script>
 <script>
-(function() {
-  if (window.location.hostname.indexOf("webglfundamentals.org") < 0) {
-      return;
-  }
-
-  function addScript(src, type, fn) {
-    const script = document.createElement('script');
-    const firstScript = document.getElementsByTagName('script')[0];
-    script.async = true;
-    script.defer = true;
-    script.type = type || 'javascript';
-    if (fn) {
-      script.addEventListener('load', fn);
-    }
-    script.src = src;
-    firstScript.parentNode.insertBefore(script, firstScript);
-  }
-
-  // can't do this because it would eat contexts
-  //addScript('//gpustats.org/stats.js', 'module');
-
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-59804936-1', 'auto');
-  ga('send', 'pageview');
-}());
 </script>
 
 

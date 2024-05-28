@@ -104,6 +104,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <link rel="alternate" hreflang="pl" href="https://webglfundamentals.org/webgl/lessons/pl/webgl-2d-rotation.html">
   <link rel="alternate" hreflang="pt-br" href="https://webglfundamentals.org/webgl/lessons/pt-br/webgl-2d-rotation.html">
   <link rel="alternate" hreflang="ru" href="https://webglfundamentals.org/webgl/lessons/ru/webgl-2d-rotation.html">
+  <link rel="alternate" hreflang="uk" href="https://webglfundamentals.org/webgl/lessons/uk/webgl-2d-rotation.html">
   <link rel="alternate" hreflang="zh_cn" href="https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-2d-rotation.html">
 
 
@@ -121,6 +122,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <option value="/webgl/lessons/pl/webgl-2d-rotation.html" >Polski</a>
     <option value="/webgl/lessons/pt-br/webgl-2d-rotation.html" >Portuguese</a>
     <option value="/webgl/lessons/ru/webgl-2d-rotation.html" >Русский</a>
+    <option value="/webgl/lessons/uk/webgl-2d-rotation.html" >Українська</a>
     <option value="/webgl/lessons/zh_cn/webgl-2d-rotation.html" >简体中文</a>
 </select>
 
@@ -380,7 +382,7 @@ articles. <a href="webgl-2d-scale.html">Next up a simpler one. Scale</a>.</p>
 Radians are a unit of measurement used with circles, rotation and angles. Just like we can measure distance in inches, yards, meters, etc we can measure angles in degrees or radians.
 </p>
 <p>
-You're probably aware that math with metric measurements is easier than math with imperial measurements. To go from inches to feet we divide by 12. To go from inches to yards we divide by 36. I don't know about you but I can't divide by 36 in my head. With metric it's much easier. To go from millimeters to centimeters we multiply by 10. To go from millimeters to meters we multiply by 1000. I <strong>can</strong> multiply by 1000 in my head.
+You're probably aware that math with metric measurements is easier than math with imperial measurements. To go from inches to feet we divide by 12. To go from inches to yards we divide by 36. I don't know about you but I can't divide by 36 in my head. With metric it's much easier. To go from millimeters to centimeters we divide by 10. To go from millimeters to meters we divide by 1000. I <strong>can</strong> divide by 1000 in my head.
 </p>
 <p>
 Radians vs degrees are similar. Degrees make the math hard. Radians make the math easy. There are 360 degrees in a circle but there are only 2π radians. So a full turn is 2π radians. A half turn is 1π radian. A 1/4 turn, ie 90 degrees is 1/2π radians. So if you want to rotate something 90 degrees just use <code class="notranslate" translate="no">Math.PI * 0.5</code>. If you want to rotate it 45 degrees use <code class="notranslate" translate="no">Math.PI * 0.25</code> etc.
@@ -402,6 +404,7 @@ Nearly all math involving angles, circles or rotation works very simply if you s
     <option value="/webgl/lessons/pl/webgl-2d-rotation.html" >Polski</a>
     <option value="/webgl/lessons/pt-br/webgl-2d-rotation.html" >Portuguese</a>
     <option value="/webgl/lessons/ru/webgl-2d-rotation.html" >Русский</a>
+    <option value="/webgl/lessons/uk/webgl-2d-rotation.html" >Українська</a>
     <option value="/webgl/lessons/zh_cn/webgl-2d-rotation.html" >简体中文</a>
 </select>
 
@@ -550,11 +553,11 @@ Nearly all math involving angles, circles or rotation works very simply if you s
     </div>
     <div class="lesson-comments">
         
-    <div>Questions? <a href="https://stackoverflow.com/questions/tagged/webgl">Ask on stackoverflow</a>.</div>
-    <div>Issue/Bug? <a href="https://github.com/gfxfundamentals/webgl-fundamentals/issues">Create an issue on github</a>.</div>
-    <div class="lesson-comment-notes">
-       Use <b>&lt;pre&gt;&lt;code&gt;</b>code goes here<b>&lt;/code&gt;&lt;/pre&gt;</b> for code blocks
-    </div>
+<div>Questions? <a href="https://stackoverflow.com/questions/tagged/webgl">Ask on stackoverflow</a>.</div>
+<div>Issue/Bug? <a href="https://github.com/gfxfundamentals/webgl-fundamentals/issues">Create an issue on github</a>.</div>
+<div class="lesson-comment-notes">
+   Use <b>&lt;pre&gt;&lt;code&gt;</b>code goes here<b>&lt;/code&gt;&lt;/pre&gt;</b> for code blocks
+</div>
   
 
         <div id="disqus_thread"></div>
@@ -592,35 +595,6 @@ const settings = {
 <script src="/webgl/lessons/resources/prettify.js"></script>
 <script src="/webgl/lessons/resources/lesson.js" type="module"></script>
 <script>
-(function() {
-  if (window.location.hostname.indexOf("webglfundamentals.org") < 0) {
-      return;
-  }
-
-  function addScript(src, type, fn) {
-    const script = document.createElement('script');
-    const firstScript = document.getElementsByTagName('script')[0];
-    script.async = true;
-    script.defer = true;
-    script.type = type || 'javascript';
-    if (fn) {
-      script.addEventListener('load', fn);
-    }
-    script.src = src;
-    firstScript.parentNode.insertBefore(script, firstScript);
-  }
-
-  // can't do this because it would eat contexts
-  //addScript('//gpustats.org/stats.js', 'module');
-
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-59804936-1', 'auto');
-  ga('send', 'pageview');
-}());
 </script>
 
 

@@ -104,6 +104,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <link rel="alternate" hreflang="pl" href="https://webglfundamentals.org/webgl/lessons/pl/webgl-shaders-and-glsl.html">
   <link rel="alternate" hreflang="pt-br" href="https://webglfundamentals.org/webgl/lessons/pt-br/webgl-shaders-and-glsl.html">
   <link rel="alternate" hreflang="ru" href="https://webglfundamentals.org/webgl/lessons/ru/webgl-shaders-and-glsl.html">
+  <link rel="alternate" hreflang="uk" href="https://webglfundamentals.org/webgl/lessons/uk/webgl-shaders-and-glsl.html">
   <link rel="alternate" hreflang="zh_cn" href="https://webglfundamentals.org/webgl/lessons/zh_cn/webgl-shaders-and-glsl.html">
 
 
@@ -121,6 +122,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     <option value="/webgl/lessons/pl/webgl-shaders-and-glsl.html" >Polski</a>
     <option value="/webgl/lessons/pt-br/webgl-shaders-and-glsl.html" >Portuguese</a>
     <option value="/webgl/lessons/ru/webgl-shaders-and-glsl.html" >Русский</a>
+    <option value="/webgl/lessons/uk/webgl-shaders-and-glsl.html" >Українська</a>
     <option value="/webgl/lessons/zh_cn/webgl-shaders-and-glsl.html" >简体中文</a>
 </select>
 
@@ -608,6 +610,7 @@ Reference Card</a>」
     <option value="/webgl/lessons/pl/webgl-shaders-and-glsl.html" >Polski</a>
     <option value="/webgl/lessons/pt-br/webgl-shaders-and-glsl.html" >Portuguese</a>
     <option value="/webgl/lessons/ru/webgl-shaders-and-glsl.html" >Русский</a>
+    <option value="/webgl/lessons/uk/webgl-shaders-and-glsl.html" >Українська</a>
     <option value="/webgl/lessons/zh_cn/webgl-shaders-and-glsl.html" >简体中文</a>
 </select>
 
@@ -792,35 +795,6 @@ const settings = {
 <script src="/webgl/lessons/resources/prettify.js"></script>
 <script src="/webgl/lessons/resources/lesson.js" type="module"></script>
 <script>
-(function() {
-  if (window.location.hostname.indexOf("webglfundamentals.org") < 0) {
-      return;
-  }
-
-  function addScript(src, type, fn) {
-    const script = document.createElement('script');
-    const firstScript = document.getElementsByTagName('script')[0];
-    script.async = true;
-    script.defer = true;
-    script.type = type || 'javascript';
-    if (fn) {
-      script.addEventListener('load', fn);
-    }
-    script.src = src;
-    firstScript.parentNode.insertBefore(script, firstScript);
-  }
-
-  // can't do this because it would eat contexts
-  //addScript('//gpustats.org/stats.js', 'module');
-
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-59804936-1', 'auto');
-  ga('send', 'pageview');
-}());
 </script>
 
 
